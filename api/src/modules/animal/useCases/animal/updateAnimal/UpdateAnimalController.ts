@@ -19,6 +19,7 @@ class UpdateAnimalController {
             idade,
             raca,
             cor,
+            cod_usuario_atual: request.user.cod_usuario,
         });
         return response.status(201).json(animal);
     }

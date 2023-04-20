@@ -10,7 +10,10 @@ class DeleteAnimalController {
 
         const deleteAnimalUseCase = container.resolve(DeleteAnimalUseCase);
 
-        const list = await deleteAnimalUseCase.execute({ cod_animal });
+        const list = await deleteAnimalUseCase.execute({
+            cod_animal,
+            cod_usuario: request.user.cod_usuario,
+        });
         return response.status(200).json(list);
     }
 }
