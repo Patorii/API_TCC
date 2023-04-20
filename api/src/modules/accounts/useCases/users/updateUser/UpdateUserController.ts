@@ -18,6 +18,7 @@ class UpdateUserController {
             cnpj,
             email,
             cod_usuario,
+            cod_usuario_atual: request.user.cod_usuario,
         });
         return response.status(201).json(user);
     }

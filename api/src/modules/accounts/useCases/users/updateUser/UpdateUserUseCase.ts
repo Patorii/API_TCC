@@ -25,7 +25,20 @@ class UpdateUserUseCase {
         cnpj,
         email,
         cod_usuario,
+        cod_usuario_atual,
     }: IRequest): Promise<User> {
+        const userExists = await this.usersRepository.findById(cod_usuario);
+
+        if (!userExists) {
+            throw new AppError("Usuário não localizado.", 400);
+        }
+        if (userExists.cod_usuario !== cod_usuario_atual) {
+            throw new AppError(
+                "Não é possivel alterar os dados de outro usuário.",
+                401
+            );
+        }
+
         if (!cpf && !cnpj) {
             throw new AppError("É necessário informar o CPF ou CNPJ");
         }
@@ -37,12 +50,6 @@ class UpdateUserUseCase {
         }
         if (!cnpj) {
             cnpj = null;
-        }
-
-        const userExists = await this.usersRepository.findById(cod_usuario);
-
-        if (!userExists) {
-            throw new AppError("Usuário não localizado.", 400);
         }
 
         const user = await this.usersRepository.update({

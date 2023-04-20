@@ -12,9 +12,9 @@ interface IList {
 interface IAnnouncementRepository {
     create(data: IAnnouncementDTO): Promise<Announcement>;
     update(data: IAnnouncementDTO): Promise<Announcement>;
-    delete(cod_anuncio: number): Promise<void>;
     findById(cod_anuncio: number): Promise<Announcement>;
     listAll(page: number, limit: number, order: string): Promise<IList>;
+    delete(cod_anuncio: number): Promise<void>;
 }
 
 export { IAnnouncementRepository };

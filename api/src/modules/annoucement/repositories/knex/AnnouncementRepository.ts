@@ -122,18 +122,9 @@ class AnnouncementRepository implements IAnnouncementRepository {
 
     async delete(cod_anuncio: number): Promise<void> {
         try {
-            const announcement = await db("anuncios")
-                .where({ cod_anuncio })
-                .first();
-
-            if (!announcement) {
-                throw new AppError(
-                    "Anuncio não localizado, não foi possivel realizar a exclusão.",
-                    404
-                );
-            }
-            await db("anuncios").where(cod_anuncio).del();
-        } catch {
+            await db("anuncios").where({ cod_anuncio }).del();
+        } catch (err) {
+            console.log(err);
             throw new AppError(
                 "Falha ao tentar excluir anuncio, tente novamente",
                 400
