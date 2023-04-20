@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 
 import { CreateAnnouncementUseCase } from "./CreateAnnouncementUseCase";
 
-class CreateAnouncementController {
+class CreateAnnouncementController {
     async handle(request: Request, response: Response): Promise<Response> {
         const data = request.body;
         data.cod_usuario = request.user.cod_usuario;
@@ -17,4 +17,4 @@ class CreateAnouncementController {
     }
 }
 
-export { CreateAnouncementController };
+export { CreateAnnouncementController };
