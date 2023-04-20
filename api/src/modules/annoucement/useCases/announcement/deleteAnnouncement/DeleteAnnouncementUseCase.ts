@@ -1,4 +1,4 @@
-import { IAnnouncementRepository } from "@modules/Announcement/repositories/IAnnouncementRepository";
+import { IAnnouncementRepository } from "@modules/annoucement/repositories/IAnnouncementRepository";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";

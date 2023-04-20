@@ -21,7 +21,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
             table: "anuncios",
             pkField: "cod_anuncio",
             checkRepeatedField: [
-                { field: `${data.cod_animal}`, description: "animal" },
+                { field: "cod_animal", description: "animal" },
             ],
             entity: "anuncio",
             entityArticle: "o",
@@ -36,7 +36,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
             table: "anuncios",
             pkField: "cod_anuncio",
             checkRepeatedField: [
-                { field: `${data.cod_animal}`, description: "animal" },
+                { field: "cod_animal", description: "animal" },
             ],
             entity: "anuncio",
             entityArticle: "o",
@@ -52,13 +52,13 @@ class AnnouncementRepository implements IAnnouncementRepository {
                 "SELECT anuncios.*, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
-                "WHERE  anuncios.cod_anuncio = 1 AND anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario ";
+                "WHERE  anuncios.cod_anuncio = ?? AND anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario ";
 
             const announcement = await db.raw(sql, [cod_anuncio]);
             if (!announcement) {
                 throw new AppError("Anuncio não localizado.", 404);
             }
-            return announcement[0];
+            return announcement[0][0];
         } catch (error) {
             throw new AppError(error);
         }

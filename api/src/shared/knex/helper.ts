@@ -248,7 +248,8 @@ const dbHelper = {
                 await db(table)
                     .insert(updatedata)
                     .then()
-                    .catch(() => {
+                    .catch((err) => {
+                        console.log(err);
                         throw new AppError(
                             `Erro: "erro interno - insert exceptionError"`,
                             409
