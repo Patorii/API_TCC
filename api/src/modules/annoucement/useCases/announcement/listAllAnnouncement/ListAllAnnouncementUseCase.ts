@@ -6,6 +6,9 @@ interface IRequest {
     page: number;
     limit: number;
     order: string;
+    uf?: string;
+    especie?: "C" | "G";
+    raca?: string;
 }
 interface IList {
     data: Announcement[];
@@ -21,11 +24,21 @@ class ListAllAnnouncementUseCase {
         private AnnouncementRepository: IAnnouncementRepository
     ) {}
 
-    async execute({ page, limit, order }: IRequest): Promise<IList> {
+    async execute({
+        page,
+        limit,
+        order,
+        uf,
+        especie,
+        raca,
+    }: IRequest): Promise<IList> {
         const Announcement = await this.AnnouncementRepository.listAll(
             page,
             limit,
-            order
+            order,
+            uf,
+            especie,
+            raca
         );
         return Announcement;
     }

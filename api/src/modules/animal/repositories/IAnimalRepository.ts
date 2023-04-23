@@ -4,7 +4,7 @@ import { Animal } from "../entities/Animal";
 interface IAnimalRepository {
     create(data: IAnimalDTO): Promise<Animal>;
     update(data: IAnimalDTO): Promise<Animal>;
-    delete(cod_usuario: number): Promise<void>;
+    delete(cod_animal: number): Promise<void>;
     findById(cod_usuario: number): Promise<Animal>;
 }
 

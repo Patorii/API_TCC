@@ -8,7 +8,7 @@ import swaggerUi from "swagger-ui-express";
 
 import { AppError } from "@shared/errors/AppError";
 
-import swaggerFile from "../../swagger.json";
+// import swaggerFile from "../../swagger.json";
 import { router } from "./routes";
 
 const app = express();
@@ -28,8 +28,8 @@ const forwardedPrefixSwagger = async (
 app.use(
     "/docs",
     forwardedPrefixSwagger,
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerFile)
+    swaggerUi.serve
+    // swaggerUi.setup(swaggerFile)
 );
 
 app.use(router);

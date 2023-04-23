@@ -64,27 +64,33 @@ class AnnouncementRepository implements IAnnouncementRepository {
         }
     }
 
-    async listAll(page: number, limit: number, order: string): Promise<IList> {
+    async listAll(
+        page: number,
+        limit: number,
+        order: string,
+        uf: string,
+        especie: "C" | "G",
+        raca: string
+    ): Promise<IList> {
         try {
-            let pageNumber;
-            const total = await dbHelper.countTable({
-                table: "anuncios",
-                field: "cod_anuncio",
-            });
-
-            const pages = Math.ceil(total / limit);
-
-            if (page > pages) {
-                pageNumber = pages;
-            } else {
-                pageNumber = page;
-            }
-
+            // criando o SQL principal
             let sql =
                 "SELECT anuncios.*, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
                 "WHERE  anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario";
+
+            if (uf) {
+                sql += ` AND anuncios.uf = "${uf}"`;
+            }
+            if (especie === "C") {
+                sql += ` AND animais.especie = "C"`;
+            } else if (especie === "G") {
+                sql += ` AND animais.especie = "G"`;
+            }
+            if (raca) {
+                sql += ` AND animais.raca = "${raca}"`;
+            }
 
             const orderBy = order.split(" ");
 
@@ -101,6 +107,21 @@ class AnnouncementRepository implements IAnnouncementRepository {
                 sql += " desc";
             }
 
+            // pre select pra ter a quantidade de resultados e assim gerar as paginas
+            const preList = await db
+                .raw(sql, [orderBy[0]])
+                .then((result) => result[0]);
+            let pageNumber;
+            const total = preList.length;
+
+            const pages = Math.ceil(total / limit);
+
+            if (page > pages) {
+                pageNumber = pages;
+            } else {
+                pageNumber = page;
+            }
+
             const offset = pageNumber * limit - limit;
             sql += ` LIMIT ${limit} OFFSET ${offset < 0 ? 0 : offset}`;
 
@@ -110,7 +131,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
 
             return {
                 data: list,
-                count: total,
+                count: list.length,
                 limit,
                 page: pageNumber,
                 totalPages: pages,

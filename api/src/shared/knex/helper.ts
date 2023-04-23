@@ -91,7 +91,6 @@ const dbHelper = {
     async getUpdatedList(
         table: string,
         field: string,
-
         limit: number,
         page: number,
         date: Date

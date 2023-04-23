@@ -34,12 +34,10 @@ class AnimalRepository implements IAnimalRepository {
         return animal;
     }
 
-    async findById(cod_animal: number | string): Promise<Animal> {
+    async findById(cod_animal: number): Promise<Animal> {
         try {
             const animal = await db("animais").where({ cod_animal }).first();
-            if (!animal) {
-                throw new AppError("Animal não localizado.", 404);
-            }
+
             return animal;
         } catch (error) {
             throw new AppError(error);
@@ -47,16 +45,7 @@ class AnimalRepository implements IAnimalRepository {
     }
     async delete(cod_animal: number): Promise<void> {
         try {
-            const Animal = await db("animais").where({ cod_animal }).first();
-
-            if (!Animal) {
-                throw new AppError(
-                    "Animal não localizado, não foi possivel realizar a exclusão.",
-                    404
-                );
-            } else {
-                await db("animais").where(cod_animal);
-            }
+            await db("animais").where({ cod_animal }).del();
         } catch {
             throw new AppError(
                 "Falha ao tentar excluir animal, tente novamente",

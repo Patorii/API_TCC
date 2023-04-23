@@ -30,13 +30,10 @@ export async function isAuthenticated(
 
     try {
         const { sub } = verify(token, auth.secret_token) as IPayload;
-
-        const subInfo = sub.split(",");
-        const cod_usuario = subInfo[0];
-        const cod_cicom = Number(subInfo[1]);
+        const cod_usuario = sub;
 
         const usersRepository = new UsersRepository();
-        const user = await usersRepository.findById(cod_usuario, cod_cicom);
+        const user = await usersRepository.findById(cod_usuario);
 
         if (!user) {
             throw new AppError("Usuário não existe!", 401);
@@ -44,7 +41,7 @@ export async function isAuthenticated(
 
         request.user = {
             nome: user.nome,
-            cod_usuario: user.cod_usuario,
+            cod_usuario: Number(user.cod_usuario),
         };
 
         next();

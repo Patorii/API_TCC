@@ -8,7 +8,7 @@ import { AppError } from "@shared/errors/AppError";
 interface IRequest {
     cod_animal: number;
     cod_usuario: number;
-    especie: string;
+    especie: "C" | "G";
     nome: string;
     idade: string;
     raca: string;

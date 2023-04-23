@@ -10,6 +10,9 @@ class UpdateAnimalController {
         const data = request.body;
         data.cod_animal = cod_animal;
         data.cod_usuario = request.user.cod_usuario;
+        if (data.raca) {
+            data.raca = data.raca.toUpperCase();
+        }
 
         const updateAnimalUseCase = container.resolve(UpdateAnimalUseCase);
 
