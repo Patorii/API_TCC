@@ -91,7 +91,7 @@ const dbHelper = {
     async getUpdatedList(
         table: string,
         field: string,
-        cod_cicom: number,
+
         limit: number,
         page: number,
         date: Date
@@ -122,7 +122,6 @@ const dbHelper = {
                 updatedList = [];
             } else {
                 updatedList = await db(table)
-                    .where({ cod_cicom })
                     .whereRaw("updated_at >= ?", [date])
                     .limit(limit)
                     .offset(offset)

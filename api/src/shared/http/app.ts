@@ -26,7 +26,7 @@ const forwardedPrefixSwagger = async (
 };
 
 app.use(
-    "/api-docs",
+    "/docs",
     forwardedPrefixSwagger,
     swaggerUi.serve,
     swaggerUi.setup(swaggerFile)
