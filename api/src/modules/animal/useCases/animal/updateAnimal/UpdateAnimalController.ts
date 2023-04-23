@@ -7,20 +7,13 @@ class UpdateAnimalController {
     async handle(request: Request, response: Response): Promise<Response> {
         const { codanimal } = request.params;
         const cod_animal = Number(codanimal);
-        const { cod_usuario, especie, nome, idade, raca, cor } = request.body;
+        const data = request.body;
+        data.cod_animal = cod_animal;
+        data.cod_usuario = request.user.cod_usuario;
 
         const updateAnimalUseCase = container.resolve(UpdateAnimalUseCase);
 
-        const animal = await updateAnimalUseCase.execute({
-            cod_animal,
-            cod_usuario,
-            especie,
-            nome,
-            idade,
-            raca,
-            cor,
-            cod_usuario_atual: request.user.cod_usuario,
-        });
+        const animal = await updateAnimalUseCase.execute(data);
         return response.status(201).json(animal);
     }
 }

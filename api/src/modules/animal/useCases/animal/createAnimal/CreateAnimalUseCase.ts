@@ -20,22 +20,8 @@ class CreateAnimalUseCase {
         private animalRepository: IAnimalRepository
     ) {}
 
-    async execute({
-        cod_usuario,
-        especie,
-        nome,
-        idade,
-        raca,
-        cor,
-    }: IRequest): Promise<Animal> {
-        const newAnimal = await this.animalRepository.create({
-            cod_usuario,
-            especie,
-            nome,
-            idade,
-            raca,
-            cor,
-        });
+    async execute(data: IRequest): Promise<Animal> {
+        const newAnimal = await this.animalRepository.create(data);
         return newAnimal;
     }
 }

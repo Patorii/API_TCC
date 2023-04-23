@@ -13,7 +13,6 @@ interface IRequest {
     idade: string;
     raca: string;
     cor: string;
-    cod_usuario_atual: number;
 }
 
 @injectable()
@@ -23,17 +22,10 @@ class UpdateAnimalUseCase {
         private animalRepository: IAnimalRepository
     ) {}
 
-    async execute({
-        cod_animal,
-        cod_usuario,
-        especie,
-        nome,
-        idade,
-        raca,
-        cor,
-        cod_usuario_atual,
-    }: IRequest): Promise<Animal> {
-        const animalExists = await this.animalRepository.findById(cod_animal);
+    async execute(data: IRequest): Promise<Animal> {
+        const animalExists = await this.animalRepository.findById(
+            data.cod_animal
+        );
 
         if (!animalExists) {
             throw new AppError(
@@ -41,22 +33,14 @@ class UpdateAnimalUseCase {
             );
         }
 
-        if (animalExists.cod_usuario !== cod_usuario_atual) {
+        if (animalExists.cod_usuario !== data.cod_usuario) {
             throw new AppError(
-                "Não é possivel apagar o animal cadastrado por outro usuário.",
+                "Não é possivel alterar o animal cadastrado por outro usuário.",
                 401
             );
         }
 
-        const animal = await this.animalRepository.update({
-            cod_animal,
-            cod_usuario,
-            especie,
-            nome,
-            idade,
-            raca,
-            cor,
-        });
+        const animal = await this.animalRepository.update(data);
         return animal;
     }
 }
