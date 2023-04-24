@@ -2,7 +2,7 @@ import { IAnnouncementPhotosDTO } from "../dtos/IAnnouncementPhotosDTO";
 import { AnnouncementPhotos } from "../entities/AnnouncementPhotos";
 
 interface IPhotoBase64 {
-    arquivo: string;
+    foto: string;
     extensao: string;
 }
 

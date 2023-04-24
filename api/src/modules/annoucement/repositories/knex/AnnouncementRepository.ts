@@ -7,8 +7,30 @@ import { dbHelper } from "@shared/knex/helper";
 
 import { IAnnouncementRepository } from "../IAnnouncementRepository";
 
+interface IFotoPrincipal {
+    foto: string;
+    extensao: string;
+}
+
+interface IListData {
+    cod_anuncio?: number;
+    cod_usuario: number;
+    cod_animal: number;
+    descricao: string;
+    cep: number;
+    uf: string;
+    cidade: string;
+    bairro: string;
+    endereco: string;
+    numero: number;
+    complemento: string;
+    data_anuncio: Date;
+    created_at?: Date;
+    updated_at?: Date;
+    foto_principal: IFotoPrincipal;
+}
 interface IList {
-    data: Announcement[];
+    data: IListData[];
     count: number;
     limit: number;
     page: number;

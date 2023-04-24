@@ -10,7 +10,7 @@ import { dbHelper } from "@shared/knex/helper";
 import { IAnnouncementPhotosRepository } from "../IAnnouncementPhotosRepository";
 
 interface IPhotoBase64 {
-    arquivo: string;
+    foto: string;
     extensao: string;
 }
 
@@ -98,20 +98,19 @@ class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
 
     async getMainPhotoBase64ByCod(cod_anuncio: number): Promise<IPhotoBase64> {
         try {
-            const productPhoto = await db("fotos_produto")
+            const announcementPhoto = await db("fotos_anuncio")
                 .where({ cod_anuncio })
-                .where({ foto_capa: "S" })
+                .where({ capa: "S" })
                 .first();
 
-            if (!productPhoto) {
+            if (!announcementPhoto) {
                 return {
-                    arquivo: "",
+                    foto: "",
                     extensao: "",
                 };
             }
 
-            const imageFile = productPhoto.arquivo;
-
+            const imageFile = announcementPhoto.arquivo;
             const isFileExists = fileExists(imageFile);
 
             let photo = "";
@@ -121,8 +120,8 @@ class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
             }
 
             return {
-                arquivo: photo,
-                extensao: productPhoto.extensao,
+                foto: photo,
+                extensao: announcementPhoto.extensao,
             };
         } catch (error) {
             throw new AppError(error);

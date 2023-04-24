@@ -44,7 +44,7 @@ class ListMainAnnouncementPhotosUseCase {
             );
 
         const foto = { foto_principal: "" };
-        foto.foto_principal = mainPhoto.arquivo;
+        foto.foto_principal = mainPhoto.foto;
 
         return foto;
     }
