@@ -17,9 +17,10 @@ interface IAnnouncementRepository {
         page: number,
         limit: number,
         order: string,
-        uf: string,
-        especie: "C" | "G",
-        raca: string
+        uf?: string,
+        especie?: "C" | "G",
+        raca?: string,
+        tipo?: "A" | "P"
     ): Promise<IList>;
     delete(cod_anuncio: number): Promise<void>;
 }

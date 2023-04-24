@@ -68,9 +68,10 @@ class AnnouncementRepository implements IAnnouncementRepository {
         page: number,
         limit: number,
         order: string,
-        uf: string,
-        especie: "C" | "G",
-        raca: string
+        uf?: string,
+        especie?: "C" | "G",
+        raca?: string,
+        tipo?: "A" | "P"
     ): Promise<IList> {
         try {
             // criando o SQL principal
@@ -83,13 +84,14 @@ class AnnouncementRepository implements IAnnouncementRepository {
             if (uf) {
                 sql += ` AND anuncios.uf = "${uf}"`;
             }
-            if (especie === "C") {
-                sql += ` AND animais.especie = "C"`;
-            } else if (especie === "G") {
-                sql += ` AND animais.especie = "G"`;
+            if (especie) {
+                sql += ` AND animais.especie = "${especie}"`;
             }
             if (raca) {
                 sql += ` AND animais.raca = "${raca}"`;
+            }
+            if (tipo) {
+                sql += ` AND anuncios.tipo = "${tipo}"`;
             }
 
             const orderBy = order.split(" ");

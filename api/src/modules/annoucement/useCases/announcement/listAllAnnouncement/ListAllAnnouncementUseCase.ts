@@ -9,6 +9,7 @@ interface IRequest {
     uf?: string;
     especie?: "C" | "G";
     raca?: string;
+    tipo?: "A" | "P";
 }
 interface IList {
     data: Announcement[];
@@ -31,6 +32,7 @@ class ListAllAnnouncementUseCase {
         uf,
         especie,
         raca,
+        tipo,
     }: IRequest): Promise<IList> {
         const Announcement = await this.AnnouncementRepository.listAll(
             page,
@@ -38,7 +40,8 @@ class ListAllAnnouncementUseCase {
             order,
             uf,
             especie,
-            raca
+            raca,
+            tipo
         );
         return Announcement;
     }
