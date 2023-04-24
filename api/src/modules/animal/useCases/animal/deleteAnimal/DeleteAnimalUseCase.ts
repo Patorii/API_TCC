@@ -16,6 +16,9 @@ class DeleteAnimalUseCase {
     ) {}
 
     async execute({ cod_animal, cod_usuario }: IRequest): Promise<void> {
+        if (!cod_animal) {
+            throw new AppError("O código do animal deve ser informado.");
+        }
         const animalExists = await this.animalRepository.findById(cod_animal);
 
         if (!animalExists) {

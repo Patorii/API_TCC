@@ -30,6 +30,9 @@ class UpdateAnnouncementUseCase {
     ) {}
 
     async execute(data: IRequest): Promise<Announcement> {
+        if (!data.cod_anuncio) {
+            throw new AppError("O código de anuncio deve ser informado.");
+        }
         const announcementExists = await this.announcementRepository.findById(
             data.cod_anuncio
         );

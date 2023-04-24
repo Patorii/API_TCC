@@ -23,6 +23,9 @@ class UpdateAnimalUseCase {
     ) {}
 
     async execute(data: IRequest): Promise<Animal> {
+        if (!data.cod_animal) {
+            throw new AppError("O código do animal deve ser informado.");
+        }
         const animalExists = await this.animalRepository.findById(
             data.cod_animal
         );

@@ -1,28 +1,22 @@
 import { db } from "@configs/mariadb";
 import { IAnnouncementPhotosDTO } from "@modules/annoucement/dtos/IAnnouncementPhotosDTO";
 import { AnnouncementPhotos } from "@modules/annoucement/entities/AnnouncementPhotos";
+import { fileExists } from "@utils/file";
+import fs from "fs";
 
 import { AppError } from "@shared/errors/AppError";
 import { dbHelper } from "@shared/knex/helper";
 
 import { IAnnouncementPhotosRepository } from "../IAnnouncementPhotosRepository";
 
+interface IPhotoBase64 {
+    arquivo: string;
+    extensao: string;
+}
+
 class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
     async create(data: IAnnouncementPhotosDTO): Promise<AnnouncementPhotos> {
         const announcementPhotos = await dbHelper.insert({
-            table: "fotos_anuncio",
-            pkField: "cod_foto_anuncio",
-            checkRepeatedField: [],
-            entity: "foto de anuncio",
-            entityArticle: "a",
-            data,
-        });
-
-        return announcementPhotos;
-    }
-
-    async update(data: IAnnouncementPhotosDTO): Promise<AnnouncementPhotos> {
-        const announcementPhotos = await dbHelper.update({
             table: "fotos_anuncio",
             pkField: "cod_foto_anuncio",
             checkRepeatedField: [],
@@ -46,9 +40,10 @@ class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
         }
     }
 
-    async findByDefault(): Promise<AnnouncementPhotos> {
+    async findByDefault(cod_anuncio: number): Promise<AnnouncementPhotos> {
         try {
             const announcementPhoto = await db("fotos_anuncio")
+                .where({ cod_anuncio })
                 .where({ capa: "S" })
                 .first();
 
@@ -71,19 +66,72 @@ class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
             throw new AppError(error);
         }
     }
+    async setAllPhotosOfAnnouncementNotDefault(
+        cod_anuncio: number
+    ): Promise<void> {
+        try {
+            await db("fotos_anuncio").where({ cod_anuncio }).update({
+                capa: "N",
+            });
+        } catch (error) {
+            throw new AppError(error);
+        }
+    }
+    async setDefaultPhoto(
+        cod_foto_anuncio: number
+    ): Promise<AnnouncementPhotos> {
+        try {
+            const photos = await this.findById(cod_foto_anuncio);
+
+            await this.setAllPhotosOfAnnouncementNotDefault(photos.cod_anuncio);
+
+            await db("fotos_anuncio").where({ cod_foto_anuncio }).update({
+                capa: "S",
+            });
+
+            const newMainPhoto = await this.findById(cod_foto_anuncio);
+            return newMainPhoto;
+        } catch (error) {
+            throw new AppError(error);
+        }
+    }
+
+    async getMainPhotoBase64ByCod(cod_anuncio: number): Promise<IPhotoBase64> {
+        try {
+            const productPhoto = await db("fotos_produto")
+                .where({ cod_anuncio })
+                .where({ foto_capa: "S" })
+                .first();
+
+            if (!productPhoto) {
+                return {
+                    arquivo: "",
+                    extensao: "",
+                };
+            }
+
+            const imageFile = productPhoto.arquivo;
+
+            const isFileExists = fileExists(imageFile);
+
+            let photo = "";
+            if (isFileExists) {
+                const bitmap = fs.readFileSync(imageFile);
+                photo = Buffer.from(bitmap).toString("base64");
+            }
+
+            return {
+                arquivo: photo,
+                extensao: productPhoto.extensao,
+            };
+        } catch (error) {
+            throw new AppError(error);
+        }
+    }
 
     async delete(cod_foto_anuncio: number): Promise<void> {
         try {
-            const announcementPhoto = await this.findById(cod_foto_anuncio);
-
-            if (!announcementPhoto) {
-                throw new AppError(
-                    "Anuncio não localizado, não foi possivel realizar a exclusão.",
-                    404
-                );
-            }
-
-            await db("fotos_anuncio").where(cod_foto_anuncio).del();
+            await db("fotos_anuncio").where({ cod_foto_anuncio }).del();
         } catch {
             throw new AppError(
                 "Falha ao tentar excluir anuncio, tente novamente",
