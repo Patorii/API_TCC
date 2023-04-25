@@ -112,7 +112,7 @@ class AnnouncementPhotosRepository implements IAnnouncementPhotosRepository {
 
             const imageFile = announcementPhoto.arquivo;
             const isFileExists = fileExists(imageFile);
-
+            //
             let photo = "";
             if (isFileExists) {
                 const bitmap = fs.readFileSync(imageFile);
