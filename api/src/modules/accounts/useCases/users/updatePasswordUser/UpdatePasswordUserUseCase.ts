@@ -11,7 +11,6 @@ const passwordComplexity = require("joi-password-complexity");
 interface IRequest {
     senha_atual: string;
     nova_senha: string;
-
     cod_usuario: number;
     cod_usuario_logado: number | string;
 }
@@ -26,18 +25,19 @@ class UpdatePasswordUserUseCase {
     async execute({
         senha_atual,
         nova_senha,
-
         cod_usuario,
         cod_usuario_logado,
     }: IRequest): Promise<User> {
         if (cod_usuario !== cod_usuario_logado) {
             throw new AppError(
                 "Só é possível atualizar a senha do usuário logado.",
-                400
+                401
             );
         }
 
-        const userExists = await this.usersRepository.findById(cod_usuario);
+        const userExists = await this.usersRepository.findByIdWithPassword(
+            cod_usuario
+        );
 
         if (!userExists) {
             throw new AppError("Usuário não localizado.", 406);
@@ -88,7 +88,7 @@ class UpdatePasswordUserUseCase {
             });
             throw new AppError(msg, 406);
         }
-
+        console.log(nova_senha);
         const passwordHash = await hash(nova_senha, 8);
 
         const user = await this.usersRepository.update({

@@ -10,6 +10,7 @@ interface IRequest {
     cnpj: number;
     email: string;
     cod_usuario: number;
+    cod_usuario_atual: number;
 }
 
 @injectable()

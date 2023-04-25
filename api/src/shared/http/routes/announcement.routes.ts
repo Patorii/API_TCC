@@ -89,11 +89,8 @@ announcementRoutes.get(
     isAuthenticated,
     getAnnouncementController.handle
 );
-announcementRoutes.get(
-    "/",
-    isAuthenticated,
-    listAllAnnouncementController.handle
-);
+announcementRoutes.get("/", listAllAnnouncementController.handle);
+
 announcementRoutes.delete(
     "/:codanuncio",
     isAuthenticated,

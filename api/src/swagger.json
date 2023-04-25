@@ -1,0 +1,411 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "APetI",
+        "description": "Documentação da API APetI, API REST de animais perdidos e para adoção",
+        "version": "1.0.0",
+        "contact": {
+            "email": "epatrickrossetto01@gmail.com"
+        }
+    },
+    "paths": {
+        "/signin": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Login - obter token",
+                "description": "Faz o login do usuario e obtem um token",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "senha": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "teste@gmail.com",
+                                    "senha": "Teste@123"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string"
+                                        },
+                                        "expiresInMinutes": {
+                                            "type": "number"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "nome": {
+                                                    "type": "string"
+                                                },
+                                                "cod_usuario": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email ou senha incorretos!"
+                    },
+                    "406": {
+                        "description": "Usuário não localizado."
+                    }
+                }
+            }
+        },
+        "/refresh-token": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Atualizar o token",
+                "description": "Atualizar o token enviando um refresh token",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjE0MzE4NzcsImV4cCI6MTY2MjAzNjY3Nywic3ViIjoiMSwgNzIzOSJ9.Bpek"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Novo token gerado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Refresh Token não localizado."
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Criar um novo usuário",
+                "description": "Cria um novo usuário, usuário pode ser criado com um CPF ou com CNPJ",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "cnpj": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "senha": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "nome": "User name sample",
+                                    "cpf": "12345678901",
+                                    "email": "user@email.com",
+                                    "senha": "User@1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "cnpj": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "A senha deve ter no mínimo 6 caracteres<br />A senha deve conter ao menos 1 caracteres maiúsculos<br />A senha deve conter ao menos 1 números"
+                    },
+                    "409": {
+                        "description": "Usuário já existe."
+                    }
+                }
+            }
+        },
+        "/users/{cod_usuario}": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Atualizar dados de um usuário",
+                "description": "Atualiza os dados de um usuário",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    },
+                                    "cnpj": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "nome": "novo nome",
+                                    "cpf": "novo cpf",
+                                    "cnpj": "novo cnpj",
+                                    "email": "novo email@email.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dados do usuário atualizados com sucesso"
+                    },
+                    "404": {
+                        "description": "Usuário não localizado"
+                    },
+                    "409": {
+                        "description": "Dados informados já são utilizados por outro usuário"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "Retorna usuário",
+                "description": "Retorna um usuário",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "itens": {
+                                        "type": "object",
+                                        "properties": {
+                                            "cod_usuario": {
+                                                "type": "string"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "cpf": {
+                                                "type": "string"
+                                            },
+                                            "cnpj": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "string"
+                                            },
+                                            "updated_at": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Só é possivel ver os dados do usuário logado."
+                    },
+                    "404": {
+                        "description": "Usuário não localizado."
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "cod_usuario",
+                    "in": "path",
+                    "description": "Código do usuário",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        },
+        "/users/{cod_usuario}/password": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Alterar senha de usuário",
+                "description": "Altera a senha de um usuário",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "senha_atual": {
+                                        "type": "string"
+                                    },
+                                    "nova_senha": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "senha_atual": "User@123",
+                                    "nova_senha": "Novasenha@123"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dados do usuário atualizados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "itens": {
+                                        "type": "object",
+                                        "properties": {
+                                            "cod_usuario": {
+                                                "type": "string"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "cpf": {
+                                                "type": "string"
+                                            },
+                                            "cnpj": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Só é possível atualizar a senha do usuário logado."
+                    },
+                    "404": {
+                        "description": "Usuário não localizado"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "cod_usuario",
+                    "in": "path",
+                    "description": "Código do usuário",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "Specification": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

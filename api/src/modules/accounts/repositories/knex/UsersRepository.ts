@@ -61,6 +61,18 @@ class UsersRepository implements IUsersRepository {
             throw new AppError(error);
         }
     }
+    async findByIdWithPassword(cod_usuario: number | string): Promise<User> {
+        try {
+            const user = await db("usuarios").where({ cod_usuario }).first();
+            if (!user) {
+                throw new AppError("Usuário não localizado.", 404);
+            }
+
+            return user;
+        } catch (error) {
+            throw new AppError(error);
+        }
+    }
     async findByEmail(email: string): Promise<User> {
         try {
             const user = await db("usuarios").where({ email }).first();
