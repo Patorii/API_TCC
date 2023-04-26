@@ -1,6 +1,6 @@
 import { db } from "@configs/mariadb";
-import { IAnimalDTO } from "@modules/accounts/dtos/IAnimalDTO";
-import { Animal } from "@modules/accounts/entities/Animal";
+import { IAnimalDTO } from "@modules/animal/dtos/IAnimalDTO";
+import { Animal } from "@modules/animal/entities/Animal";
 import fs from "fs";
 
 import { AppError } from "@shared/errors/AppError";
