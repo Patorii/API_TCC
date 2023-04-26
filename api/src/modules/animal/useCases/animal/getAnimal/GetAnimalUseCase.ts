@@ -16,7 +16,7 @@ class GetAnimalUseCase {
     ) {}
 
     async execute({ cod_animal }: IRequest): Promise<Animal> {
-        if (cod_animal) {
+        if (!cod_animal) {
             throw new AppError("O código do animal deve ser informado.");
         }
         const animal = await this.animalRepository.findById(cod_animal);

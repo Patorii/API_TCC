@@ -7,6 +7,7 @@ import { inject, injectable } from "tsyringe";
 interface IRequest {
     cod_usuario: number;
     cod_animal: number;
+    tipo: "A" | "P";
     descricao: string;
     cep: number;
     uf: string;

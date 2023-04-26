@@ -31,6 +31,9 @@ class CreateAnnouncementPhotosUseCase {
         capa,
         cod_usuario,
     }: IRequest): Promise<AnnouncementPhotos> {
+        if (!cod_anuncio) {
+            throw new AppError("O código de anuncio deve ser informado.");
+        }
         const hasAnyPhoto =
             await this.announcementPhotosRepository.listByAnnouncement(
                 cod_anuncio
@@ -50,6 +53,12 @@ class CreateAnnouncementPhotosUseCase {
         const announcement = await this.announcementRepository.findById(
             cod_anuncio
         );
+
+        if (!announcement) {
+            throw new AppError(
+                "O código de anuncio informado não foi localizado na lista."
+            );
+        }
 
         if (announcement.cod_usuario !== cod_usuario) {
             throw new AppError(

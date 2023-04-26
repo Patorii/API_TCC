@@ -1,6 +1,7 @@
 import { db } from "@configs/mariadb";
 import { IAnimalDTO } from "@modules/accounts/dtos/IAnimalDTO";
 import { Animal } from "@modules/accounts/entities/Animal";
+import fs from "fs";
 
 import { AppError } from "@shared/errors/AppError";
 import { dbHelper } from "@shared/knex/helper";
@@ -45,8 +46,26 @@ class AnimalRepository implements IAnimalRepository {
     }
     async delete(cod_animal: number): Promise<void> {
         try {
+            const announcement = await db("anuncios")
+                .where({ cod_animal })
+                .first();
+
+            if (announcement) {
+                fs.rmdir(
+                    `./tmp/anuncio/${announcement.cod_anuncio}`,
+                    {
+                        recursive: true,
+                    },
+                    (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+            }
             await db("animais").where({ cod_animal }).del();
-        } catch {
+        } catch (err) {
+            console.log(err);
             throw new AppError(
                 "Falha ao tentar excluir animal, tente novamente",
                 400

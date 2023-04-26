@@ -1,6 +1,8 @@
 import { Response, Request } from "express";
 import { container } from "tsyringe";
 
+import { AppError } from "@shared/errors/AppError";
+
 import { UpdateAnimalUseCase } from "./UpdateAnimalUseCase";
 
 class UpdateAnimalController {
@@ -13,7 +15,14 @@ class UpdateAnimalController {
         if (data.raca) {
             data.raca = data.raca.toUpperCase();
         }
-
+        if (data.especie) {
+            data.especie = data.especie.toUpperCase();
+            if (data.especie !== "C" && data.especie !== "G") {
+                throw new AppError(
+                    "A especie informada não é compativel deve ser informado: 'C' para cachorro ou 'G' para gato"
+                );
+            }
+        }
         const updateAnimalUseCase = container.resolve(UpdateAnimalUseCase);
 
         const animal = await updateAnimalUseCase.execute(data);

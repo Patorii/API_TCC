@@ -9,6 +9,7 @@ interface IRequest {
     cod_anuncio: number;
     cod_usuario: number;
     cod_animal: number;
+    tipo: "A" | "P";
     descricao: string;
     cep: number;
     uf: string;

@@ -53,12 +53,10 @@ announcementRoutes.post(
 
 announcementRoutes.get(
     "/:codanuncio/mainphoto",
-    isAuthenticated,
     listMainAnnouncementPhotosController.handle
 );
 announcementRoutes.get(
     "/:codanuncio/photos",
-    isAuthenticated,
     listAllAnnouncementPhotosController.handle
 );
 announcementRoutes.patch(
@@ -84,12 +82,8 @@ announcementRoutes.patch(
     isAuthenticated,
     updateAnnouncementController.handle
 );
-announcementRoutes.get(
-    "/:codanuncio",
-    isAuthenticated,
-    getAnnouncementController.handle
-);
-announcementRoutes.get("/", listAllAnnouncementController.handle);
+announcementRoutes.get("/:codanuncio", getAnnouncementController.handle);
+announcementRoutes.patch("/", listAllAnnouncementController.handle);
 
 announcementRoutes.delete(
     "/:codanuncio",

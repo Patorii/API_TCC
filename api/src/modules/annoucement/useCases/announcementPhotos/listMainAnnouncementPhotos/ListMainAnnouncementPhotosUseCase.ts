@@ -11,7 +11,8 @@ interface IRequest {
 }
 
 interface IMainPhoto {
-    foto_principal: string;
+    foto: string;
+    extensao: string;
 }
 
 @injectable()
@@ -43,10 +44,7 @@ class ListMainAnnouncementPhotosUseCase {
                 cod_anuncio
             );
 
-        const foto = { foto_principal: "" };
-        foto.foto_principal = mainPhoto.foto;
-
-        return foto;
+        return mainPhoto;
     }
 }
 

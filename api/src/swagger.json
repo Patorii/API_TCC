@@ -5,13 +5,13 @@
         "description": "Documentação da API APetI, API REST de animais perdidos e para adoção",
         "version": "1.0.0",
         "contact": {
-            "email": "epatrickrossetto01@gmail.com"
+            "email": "patrickrossetto01@gmail.com"
         }
     },
     "paths": {
         "/signin": {
             "post": {
-                "tags": ["Users"],
+                "tags": ["Sigin"],
                 "summary": "Login - obter token",
                 "description": "Faz o login do usuario e obtem um token",
                 "requestBody": {
@@ -79,7 +79,7 @@
         },
         "/refresh-token": {
             "post": {
-                "tags": ["Users"],
+                "tags": ["Sigin"],
                 "summary": "Atualizar o token",
                 "description": "Atualizar o token enviando um refresh token",
                 "requestBody": {
@@ -256,31 +256,30 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "itens": {
-                                        "type": "object",
-                                        "properties": {
-                                            "cod_usuario": {
-                                                "type": "string"
-                                            },
-                                            "nome": {
-                                                "type": "string"
-                                            },
-                                            "email": {
-                                                "type": "string"
-                                            },
-                                            "cpf": {
-                                                "type": "string"
-                                            },
-                                            "cnpj": {
-                                                "type": "string"
-                                            },
-                                            "created_at": {
-                                                "type": "string"
-                                            },
-                                            "updated_at": {
-                                                "type": "string"
-                                            }
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_usuario": {
+                                            "type": "string"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "cnpj": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
                                         }
                                     }
                                 }
@@ -340,25 +339,22 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "itens": {
-                                        "type": "object",
-                                        "properties": {
-                                            "cod_usuario": {
-                                                "type": "string"
-                                            },
-                                            "nome": {
-                                                "type": "string"
-                                            },
-                                            "email": {
-                                                "type": "string"
-                                            },
-                                            "cpf": {
-                                                "type": "string"
-                                            },
-                                            "cnpj": {
-                                                "type": "string"
-                                            }
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_usuario": {
+                                            "type": "string"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "cnpj": {
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -384,6 +380,1066 @@
                     }
                 }
             ]
+        },
+        "/animal": {
+            "post": {
+                "tags": ["Animal"],
+                "summary": "Criar cadastro de animal",
+                "description": "Cria um cadastro de animal",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "especie": {
+                                        "type": "string",
+                                        "default": ["C", "G"]
+                                    },
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "idade": {
+                                        "type": "string"
+                                    },
+                                    "raca": {
+                                        "type": "string"
+                                    },
+                                    "cor": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dados do usuário atualizados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "especie": {
+                                            "type": "string",
+                                            "default": ["C", "G"]
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "type": "string"
+                                        },
+                                        "raca": {
+                                            "type": "string"
+                                        },
+                                        "cor": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "A especie informada não é compativel deve ser informado: 'C' para cachorro ou 'G' para gato"
+                    }
+                }
+            }
+        },
+        "/animal/{cod_animal}": {
+            "parameters": [
+                {
+                    "name": "cod_animal",
+                    "in": "path",
+                    "description": "Código do cadastro de animal",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "patch": {
+                "tags": ["Animal"],
+                "summary": "Alterar cadastro de animal",
+                "description": "Altera o cadastro de animal",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "especie": {
+                                        "type": "string",
+                                        "default": ["C", "G"]
+                                    },
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "idade": {
+                                        "type": "string"
+                                    },
+                                    "raca": {
+                                        "type": "string"
+                                    },
+                                    "cor": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cadastro de animal alterado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "especie": {
+                                            "type": "string",
+                                            "default": ["C", "G"]
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "type": "string"
+                                        },
+                                        "raca": {
+                                            "type": "string"
+                                        },
+                                        "cor": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código do animal deve ser informado.<br />O código de animal informado não foi localizado na lista.<br />A especie informada não é compativel deve ser informado: 'C' para cachorro ou 'G' para gato"
+                    },
+                    "401": {
+                        "description": "Não é possivel alterar o animal cadastrado por outro usuário."
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Animal"],
+                "summary": "Retorna cadastro de animal",
+                "description": "Retorna um cadastro de animal",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "especie": {
+                                            "type": "string",
+                                            "default": ["C", "G"]
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "type": "string"
+                                        },
+                                        "raca": {
+                                            "type": "string"
+                                        },
+                                        "cor": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código do animal deve ser informado.<br />O código de animal informado não foi localizado na lista."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Animal"],
+                "summary": "Apagar cadastro de animal",
+                "description": "Apaga um cadastro de animal",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Cadastro de animal apagado com sucesso"
+                    },
+                    "400": {
+                        "description": "O código do animal deve ser informado.<br />O código de animal informado não foi localizado na lista."
+                    }
+                }
+            }
+        },
+        "/announcement": {
+            "post": {
+                "tags": ["Announcement"],
+                "summary": "Criar anuncio",
+                "description": "Cria um anuncio",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cod_animal": {
+                                        "type": "integer"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "default": ["A", "P"]
+                                    },
+                                    "descricao": {
+                                        "type": "string"
+                                    },
+                                    "cep": {
+                                        "type": "string"
+                                    },
+                                    "uf": {
+                                        "type": "string"
+                                    },
+                                    "cidade": {
+                                        "type": "string"
+                                    },
+                                    "bairro": {
+                                        "type": "string"
+                                    },
+                                    "endereco": {
+                                        "type": "string"
+                                    },
+                                    "numero": {
+                                        "type": "int"
+                                    },
+                                    "complemento": {
+                                        "type": "string"
+                                    },
+                                    "tel": {
+                                        "type": "string"
+                                    },
+                                    "tel2": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Anuncio criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "tipo": {
+                                            "type": "string",
+                                            "default": ["A", "P"]
+                                        },
+                                        "descricao": {
+                                            "type": "string"
+                                        },
+                                        "cep": {
+                                            "type": "string"
+                                        },
+                                        "uf": {
+                                            "type": "string"
+                                        },
+                                        "cidade": {
+                                            "type": "string"
+                                        },
+                                        "bairro": {
+                                            "type": "string"
+                                        },
+                                        "endereco": {
+                                            "type": "string"
+                                        },
+                                        "numero": {
+                                            "type": "int"
+                                        },
+                                        "complemento": {
+                                            "type": "string"
+                                        },
+                                        "tel": {
+                                            "type": "string"
+                                        },
+                                        "tel2": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O tipo de anuncio informado não é compativel deve ser informado: 'A' para adoção ou 'P' para perdido"
+                    },
+                    "409": {
+                        "description": "Já existe outro anuncio com esse animal. Não são permitidas repetições."
+                    }
+                }
+            },
+            "patch": {
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da pagina",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limite de anuncios que podem ser listados em uma pagina",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Pelo o que será ordenado os resultados, por padrão é ordenado pela data de criação de maneira crescente",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": ["Announcement"],
+                "summary": "Listar anuncios",
+                "description": "Lista todos os anuncios e suas fotos principais, é possivel utilizar o corpo da requisição para filtrar os dados que serão retornados",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "tipo": {
+                                        "type": "string",
+                                        "default": ["A", "P"]
+                                    },
+                                    "especie": {
+                                        "type": "string",
+                                        "default": ["C", "G"]
+                                    },
+                                    "raca": {
+                                        "type": "string"
+                                    },
+                                    "uf": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "cod_usuario": {
+                                                    "type": "integer"
+                                                },
+                                                "cod_animal": {
+                                                    "type": "integer"
+                                                },
+                                                "cod_anuncio": {
+                                                    "type": "integer"
+                                                },
+                                                "tipo": {
+                                                    "type": "string",
+                                                    "default": ["A", "P"]
+                                                },
+                                                "descricao": {
+                                                    "type": "string"
+                                                },
+                                                "cep": {
+                                                    "type": "string"
+                                                },
+                                                "uf": {
+                                                    "type": "string"
+                                                },
+                                                "cidade": {
+                                                    "type": "string"
+                                                },
+                                                "bairro": {
+                                                    "type": "string"
+                                                },
+                                                "endereco": {
+                                                    "type": "string"
+                                                },
+                                                "numero": {
+                                                    "type": "int"
+                                                },
+                                                "complemento": {
+                                                    "type": "string"
+                                                },
+                                                "tel": {
+                                                    "type": "string"
+                                                },
+                                                "tel2": {
+                                                    "type": "string"
+                                                },
+                                                "nome_animal": {
+                                                    "type": "string"
+                                                },
+                                                "especie": {
+                                                    "type": "string",
+                                                    "default": ["C", "G"]
+                                                },
+                                                "idade": {
+                                                    "type": "string"
+                                                },
+                                                "raca": {
+                                                    "type": "string"
+                                                },
+                                                "cor": {
+                                                    "type": "string"
+                                                },
+                                                "nome": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "foto_principal": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "foto": {
+                                                            "type": "string"
+                                                        },
+                                                        "extensao": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            }
+                                        },
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "page": {
+                                            "type": "integer"
+                                        },
+                                        "totalPages": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "example": {
+                                        "data": [
+                                            {
+                                                "cod_anuncio": 3,
+                                                "cod_usuario": 1,
+                                                "cod_animal": 4,
+                                                "descricao": "Descricao do anuncio",
+                                                "uf": "SP",
+                                                "cidade": "SÃO PAULO",
+                                                "bairro": "BUTANTÃ",
+                                                "endereco": "Rua exemplo ",
+                                                "numero": 123,
+                                                "complemento": "bloco B",
+                                                "created_at": "2023-04-25T19:51:40.000Z",
+                                                "updated_at": "2023-04-25T20:09:27.000Z",
+                                                "tel": "11934576497",
+                                                "tel2": "1134576497",
+                                                "tipo": "P",
+                                                "cep": "011223344",
+                                                "nome_animal": "Tobey",
+                                                "especie": "cachorro",
+                                                "idade": "5",
+                                                "raca": "SHIH TZU",
+                                                "cor": "branco e marrom",
+                                                "nome": "Patrick Rossetto",
+                                                "email": "patrickrossetto01@gmail.com",
+                                                "foto_principal": {
+                                                    "foto": "",
+                                                    "extensao": ""
+                                                }
+                                            }
+                                        ],
+                                        "count": 1,
+                                        "limit": 10,
+                                        "page": 1,
+                                        "totalPages": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O tipo de anuncio informado não é compativel deve ser informado: 'A' para adoção ou 'P' para perdido<br />A especie informada não é compativel deve ser informado: 'C' para cachorro ou 'G' para gato"
+                    }
+                }
+            }
+        },
+        "/announcement/{cod_anuncio}": {
+            "parameters": [
+                {
+                    "name": "cod_anuncio",
+                    "in": "query",
+                    "description": "Código do anuncio",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "patch": {
+                "tags": ["Announcement"],
+                "summary": "Alterar anuncio",
+                "description": "Altera um anuncio",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cod_animal": {
+                                        "type": "integer"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "default": ["A", "P"]
+                                    },
+                                    "descricao": {
+                                        "type": "string"
+                                    },
+                                    "cep": {
+                                        "type": "string"
+                                    },
+                                    "uf": {
+                                        "type": "string"
+                                    },
+                                    "cidade": {
+                                        "type": "string"
+                                    },
+                                    "bairro": {
+                                        "type": "string"
+                                    },
+                                    "endereco": {
+                                        "type": "string"
+                                    },
+                                    "numero": {
+                                        "type": "int"
+                                    },
+                                    "complemento": {
+                                        "type": "string"
+                                    },
+                                    "tel": {
+                                        "type": "string"
+                                    },
+                                    "tel2": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Anuncio criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "tipo": {
+                                            "type": "string",
+                                            "default": ["A", "P"]
+                                        },
+                                        "descricao": {
+                                            "type": "string"
+                                        },
+                                        "cep": {
+                                            "type": "string"
+                                        },
+                                        "uf": {
+                                            "type": "string"
+                                        },
+                                        "cidade": {
+                                            "type": "string"
+                                        },
+                                        "bairro": {
+                                            "type": "string"
+                                        },
+                                        "endereco": {
+                                            "type": "string"
+                                        },
+                                        "numero": {
+                                            "type": "int"
+                                        },
+                                        "complemento": {
+                                            "type": "string"
+                                        },
+                                        "tel": {
+                                            "type": "string"
+                                        },
+                                        "tel2": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista.<br />O tipo de anuncio informado não é compativel deve ser informado: 'A' para adoção ou 'P' para perdido"
+                    },
+                    "401": {
+                        "description": "Não é possivel alterar o anuncio de outro usuário."
+                    },
+                    "409": {
+                        "description": "Já existe outro anuncio com esse animal. Não são permitidas repetições."
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Announcement"],
+                "summary": "Retornar anuncio",
+                "description": "Retorna os dados do anuncio",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_usuario": {
+                                            "type": "integer"
+                                        },
+                                        "cod_animal": {
+                                            "type": "integer"
+                                        },
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "tipo": {
+                                            "type": "string",
+                                            "default": ["A", "P"]
+                                        },
+                                        "descricao": {
+                                            "type": "string"
+                                        },
+                                        "cep": {
+                                            "type": "string"
+                                        },
+                                        "uf": {
+                                            "type": "string"
+                                        },
+                                        "cidade": {
+                                            "type": "string"
+                                        },
+                                        "bairro": {
+                                            "type": "string"
+                                        },
+                                        "endereco": {
+                                            "type": "string"
+                                        },
+                                        "numero": {
+                                            "type": "int"
+                                        },
+                                        "complemento": {
+                                            "type": "string"
+                                        },
+                                        "tel": {
+                                            "type": "string"
+                                        },
+                                        "tel2": {
+                                            "type": "string"
+                                        },
+                                        "nome_animal": {
+                                            "type": "string"
+                                        },
+                                        "especie": {
+                                            "type": "string",
+                                            "default": ["C", "G"]
+                                        },
+                                        "idade": {
+                                            "type": "string"
+                                        },
+                                        "raca": {
+                                            "type": "string"
+                                        },
+                                        "cor": {
+                                            "type": "string"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "foto_principal": {
+                                            "type": "object",
+                                            "properties": {
+                                                "foto": {
+                                                    "type": "string"
+                                                },
+                                                "extensao": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Announcement"],
+                "summary": "Apagar anuncio",
+                "description": "Apaga um anuncio",
+                "security": [{ "bearerAuth": [] }],
+
+                "responses": {
+                    "200": {
+                        "description": "Anuncio apagado com sucesso"
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista."
+                    },
+                    "401": {
+                        "description": "Não é possivel apagar o anuncio de outro usuário."
+                    }
+                }
+            }
+        },
+        "/announcement/photos/{cod_foto_anuncio}": {
+            "parameters": [
+                {
+                    "name": "cod_foto_anuncio",
+                    "in": "query",
+                    "description": "Código da foto do anuncio",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "patch": {
+                "tags": ["Announcement photos"],
+                "summary": "Definir foto como foto principal do anuncio",
+                "description": "Definir a foto escolhida como a foto principal do anuncio",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Anuncio criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_foto_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "extensao": {
+                                            "type": "string"
+                                        },
+                                        "arquivo": {
+                                            "type": "string"
+                                        },
+                                        "capa": {
+                                            "type": "string",
+                                            "default": ["N", "S"]
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código da foto do anuncio deve ser informado.<br />O código da foto de anuncio informado não foi localizado na lista.<br />Não é possivel alterar a foto de capa de um anuncio de outro usuário."
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Announcement photos"],
+                "summary": "Apagar foto do anuncio",
+                "description": "Apaga uma foto do anuncio",
+                "security": [{ "bearerAuth": [] }],
+
+                "responses": {
+                    "200": {
+                        "description": "Foto do anuncio apagada com sucesso"
+                    },
+                    "400": {
+                        "description": "O código da foto do anuncio deve ser informado.<br />O código da foto de anuncio informado não foi localizado na lista.<br />Não é possivel apagar a foto de um anuncio de outro usuário."
+                    }
+                }
+            }
+        },
+        "/announcement/{cod_anuncio}/photos": {
+            "parameters": [
+                {
+                    "name": "cod_anuncio",
+                    "in": "query",
+                    "description": "Código do anuncio",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "post": {
+                "tags": ["Announcement photos"],
+                "summary": "Adicionar foto ao anuncio",
+                "description": "Adiciona uma foto ao anuncio",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "foto": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "capa": {
+                                        "type": "string",
+                                        "default": ["N", "S"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Anuncio criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_foto_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "extensao": {
+                                            "type": "string"
+                                        },
+                                        "arquivo": {
+                                            "type": "string"
+                                        },
+                                        "capa": {
+                                            "type": "string",
+                                            "default": ["N", "S"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista.<br />A opção de capa informada não é compativel deve ser informado: 'S' para sim ou 'N' para não."
+                    },
+                    "401": {
+                        "description": "Não é possivel adicionar a fotos em um anuncio de outro usuário."
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Announcement photos"],
+                "summary": "Listar fotos do anuncio",
+                "description": "Lista todas as fotos do anuncio",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cod_foto_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "cod_anuncio": {
+                                            "type": "integer"
+                                        },
+                                        "extensao": {
+                                            "type": "string"
+                                        },
+                                        "arquivo": {
+                                            "type": "string"
+                                        },
+                                        "capa": {
+                                            "type": "string",
+                                            "default": ["N", "S"]
+                                        },
+                                        "foto": {
+                                            "type": "string",
+                                            "format": "base64"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista."
+                    }
+                }
+            }
+        },
+        "/announcement/{cod_anuncio}/mainphoto": {
+            "parameters": [
+                {
+                    "name": "cod_anuncio",
+                    "in": "query",
+                    "description": "Código do anuncio",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "get": {
+                "tags": ["Announcement photos"],
+                "summary": "Retornar foto principal do anuncio",
+                "description": "Retorna a foto principal do anuncio",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "foto": {
+                                            "type": "string",
+                                            "format": "base64"
+                                        },
+                                        "extensao": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista."
+                    }
+                }
+            }
         }
     },
     "definitions": {

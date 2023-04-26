@@ -1,6 +1,7 @@
 import { db } from "@configs/mariadb";
 import { IAnnouncementDTO } from "@modules/annoucement/dtos/IAnnouncementDTO";
 import { Announcement } from "@modules/annoucement/entities/Announcement";
+import fs from "fs";
 
 import { AppError } from "@shared/errors/AppError";
 import { dbHelper } from "@shared/knex/helper";
@@ -71,7 +72,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
     async findById(cod_anuncio: number): Promise<Announcement> {
         try {
             let sql =
-                "SELECT anuncios.*, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
+                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
                 "WHERE  anuncios.cod_anuncio = ?? AND anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario ";
@@ -98,7 +99,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
         try {
             // criando o SQL principal
             let sql =
-                "SELECT anuncios.*, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
+                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
                 "WHERE  anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario";
@@ -167,6 +168,18 @@ class AnnouncementRepository implements IAnnouncementRepository {
 
     async delete(cod_anuncio: number): Promise<void> {
         try {
+            fs.rmdir(
+                `./tmp/anuncio/${cod_anuncio}`,
+                {
+                    recursive: true,
+                },
+                (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                }
+            );
+
             await db("anuncios").where({ cod_anuncio }).del();
         } catch (err) {
             console.log(err);
