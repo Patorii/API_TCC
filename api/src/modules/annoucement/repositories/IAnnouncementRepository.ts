@@ -45,7 +45,7 @@ interface IList {
 interface IAnnouncementRepository {
     create(data: IAnnouncementDTO): Promise<Announcement>;
     update(data: IAnnouncementDTO): Promise<Announcement>;
-    findById(cod_anuncio: number): Promise<Announcement>;
+    findById(cod_anuncio: number): Promise<IListData>;
     listAll(
         page: number,
         limit: number,

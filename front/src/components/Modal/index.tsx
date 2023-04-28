@@ -46,7 +46,12 @@ function ModalPopUp({
     };
 
     return (
-        <Modal isOpen={isOpen} style={style} onRequestClose={closeFunction}>
+        <Modal
+            isOpen={isOpen}
+            style={style}
+            onRequestClose={closeFunction}
+            ariaHideApp={false}
+        >
             <Container>
                 <Xdiv>
                     <IoClose size={32} onClick={closeFunction} />

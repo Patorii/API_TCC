@@ -1,10 +1,4 @@
-import React, {
-    useEffect,
-    createContext,
-    ReactNode,
-    useContext,
-    useState,
-} from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 import apiPets from '../services/apiPets';
 
@@ -42,51 +36,6 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     const [user, setUser] = useState<IUserProps>({} as IUserProps);
     const [token, setToken] = useState('');
     const [refreshToken, setRefreshToken] = useState('');
-
-    useEffect(() => {
-        async function loadStorageData() {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            const storagedUser = localStorage.getItem('apeti:User');
-            const storagedRefreshToken =
-                localStorage.getItem('apeti:RefreshToken');
-
-            if (storagedRefreshToken) {
-                const getRefreshToken = await RefreshToken(
-                    storagedRefreshToken || ''
-                );
-                if (getRefreshToken) {
-                    storagedUser && setUser(JSON.parse(storagedUser));
-                } else {
-                    cleanLogin(true);
-                }
-            } else {
-                cleanLogin(true);
-            }
-        }
-        loadStorageData();
-    }, []);
-
-    async function RefreshToken(token: string): Promise<boolean> {
-        try {
-            const response = await apiPets.post('refresh-token', { token });
-
-            if (response.data.token) {
-                setToken(response.data.token);
-                setRefreshToken(response.data.refresh_token);
-                localStorage.setItem('apeti:Token', response.data.token);
-                localStorage.setItem(
-                    'apeti:RefreshToken',
-                    response.data.refresh_token
-                );
-                apiPets.defaults.headers.Authorization = `Baerer ${response.data.token}`;
-                return true;
-            }
-            return false;
-        } catch (err) {
-            console.log('erro RefreshToken', err);
-            return false;
-        }
-    }
 
     function cleanLogin(forced: boolean) {
         setUser({} as IUserProps);

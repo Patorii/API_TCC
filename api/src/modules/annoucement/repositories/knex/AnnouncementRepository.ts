@@ -80,7 +80,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
         return announcement;
     }
 
-    async findById(cod_anuncio: number): Promise<Announcement> {
+    async findById(cod_anuncio: number): Promise<IListData> {
         try {
             let sql =
                 "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, animais.sexo, usuarios.nome, usuarios.email ";
