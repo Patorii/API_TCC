@@ -22,6 +22,7 @@ body{
     --white: #ffffff;
     --black: #060606;
     --dark-blue: #122e5d;
+    --blue-bootstrap: #0d6efd;
     --cyan-100: #3ECFF0;
 }
 
@@ -32,5 +33,9 @@ body{
     margin: 0px;
     padding: 0px;
     font-size: 16px;
+}
+p{
+    margin: 0px;
+    padding: 0px;
 }
 `;
