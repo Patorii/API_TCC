@@ -26,7 +26,7 @@ body{
     --dark-blue: #122e5d;
     --blue-bootstrap: #0d6efd;
     --cyan-100: #3ECFF0;
-    --red: #E70000/
+    --red: #E70000;
 }
 
 *{

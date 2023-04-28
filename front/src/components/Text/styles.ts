@@ -34,6 +34,7 @@ export const Label = styled.span<TextStyles>`
               `;
             case 'large':
                 return `
+                font-weight: 600;
                 font-size: 16px;
                 line-height: 24px;
               `;
@@ -46,6 +47,6 @@ export const Label = styled.span<TextStyles>`
         if (props.isReadOnly) {
             return `color: color: var(--grey-300);`;
         }
-        return `color: var(--blue-bootstrap);`;
+        return `color: var(--dark-blue);`;
     }}
 `;

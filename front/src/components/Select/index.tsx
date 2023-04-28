@@ -27,7 +27,7 @@ function SelectInput({
     name,
     placeholder,
     onSelect,
-    textTransform = 'uppercase',
+    textTransform,
     ...props
 }: ISelect) {
     return (

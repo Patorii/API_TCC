@@ -12,7 +12,7 @@ function TextInputRoot({
     children,
     isInvalid = false,
     readOnly,
-    textTransform = 'uppercase',
+    textTransform,
     ...props
 }: TextInputRootProps) {
     return (

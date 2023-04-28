@@ -36,7 +36,7 @@ function TextInputGroup({
     ...props
 }: TextInputGroupProps) {
     return (
-        <label htmlFor={name}>
+        <label style={{ width: '100%' }} htmlFor={name}>
             <Text
                 isReadOnly={readOnly}
                 isInputLabel

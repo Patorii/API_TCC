@@ -1,5 +1,6 @@
 import React from 'react';
 import { Botao, Span } from './styles';
+import { Loader } from '../Loading';
 
 // OBS: o Atributo buttonSize altera apenas a altura do botão, a largura é controlada pela div onde o botão for criado.
 // Sempre envolva o botão com uma div para definir sua largura corretamente.
@@ -13,7 +14,7 @@ interface IButtonProps {
     onClick?: (e?: any) => void;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
-    // loading?: boolean
+    loading?: boolean;
     hint?: string;
 }
 
@@ -27,20 +28,40 @@ function Button({
     rightIcon,
     onClick,
     hint,
+    loading,
 }: IButtonProps) {
     return (
-        <Botao
-            type={buttonKind || 'button'}
-            title={hint && hint}
-            buttonType={buttonType}
-            buttonSize={buttonSize}
-            onClick={onClick}
-            disabled={!!disabled}
-        >
-            {leftIcon && leftIcon}
-            {caption ? <Span buttonType={buttonType}>{caption}</Span> : ''}
-            {rightIcon && rightIcon}
-        </Botao>
+        <>
+            {loading ? (
+                <Botao
+                    type={buttonKind || 'button'}
+                    title={hint && hint}
+                    buttonType={buttonType}
+                    buttonSize={buttonSize}
+                    onClick={onClick}
+                    disabled={!!disabled}
+                >
+                    <Loader width="32px" height="32px" />
+                </Botao>
+            ) : (
+                <Botao
+                    type={buttonKind || 'button'}
+                    title={hint && hint}
+                    buttonType={buttonType}
+                    buttonSize={buttonSize}
+                    onClick={onClick}
+                    disabled={!!disabled}
+                >
+                    {leftIcon && leftIcon}
+                    {caption ? (
+                        <Span buttonType={buttonType}>{caption}</Span>
+                    ) : (
+                        ''
+                    )}
+                    {rightIcon && rightIcon}
+                </Botao>
+            )}
+        </>
     );
 }
 
