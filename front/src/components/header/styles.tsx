@@ -15,6 +15,8 @@ export const Container = styled.header`
 export const IconArea = styled.div`
     width: 48px;
     height: 48px;
+    cursor: pointer;
+    user-select: none;
 `;
 
 export const ButtonsArea = styled.div<IButtonProps>`

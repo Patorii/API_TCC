@@ -75,7 +75,7 @@ function Login({ closeFunction }: IProps) {
                 <InputArea>
                     <TextInputGroup
                         name="password"
-                        label="Senhas"
+                        label="Senha"
                         register={register}
                         errors={errors.password}
                         type="password"

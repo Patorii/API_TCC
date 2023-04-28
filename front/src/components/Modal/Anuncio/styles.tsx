@@ -22,11 +22,13 @@ export const Image = styled.img`
     height: 350px;
     border-radius: 10px;
 `;
+
 export const PetName = styled.p`
     font-size: 36px;
     font-weight: 1000;
     color: var(--dark-blue);
 `;
+
 export const RigthSide = styled.div`
     display: flex;
     flex-direction: column;
@@ -45,7 +47,7 @@ export const Description = styled.p`
     font-size: 16px;
     font-weight: 400;
     color: var(--dark-blue);
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     text-align: justify;
     padding-right: 4px;
@@ -62,16 +64,19 @@ export const TopicsArea = styled.div`
     display: flex;
     gap: 4px;
 `;
+
 export const Topic = styled.span`
     font-size: 16px;
     font-weight: 600;
     color: var(--dark-blue);
 `;
+
 export const TopicText = styled.span`
     font-size: 16px;
     font-weight: 400;
     color: var(--dark-blue);
 `;
+
 export const ButtonArea = styled.div`
     width: 190px;
     align-self: center;

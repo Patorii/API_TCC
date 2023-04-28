@@ -21,7 +21,11 @@ export function Header() {
     return (
         <>
             <Container>
-                <IconArea>
+                <IconArea
+                    onClick={() =>
+                        signed ? navigate('/lhome') : navigate('/')
+                    }
+                >
                     <GiDogHouse size={48} color="var(--white)" />
                 </IconArea>
                 {signed ? (

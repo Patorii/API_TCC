@@ -14,12 +14,15 @@ import { Image, LeftSide, PetName, RigthSide } from './styles';
 import { Loader } from '../../Loading';
 import { Text } from '../../Text';
 import { Button } from '../../Button';
+import { useNavigate } from 'react-router-dom';
+import { telefonePattern } from '../../../constants/telefoneNumber';
 
 interface IProps {
     codAnuncio: number;
 }
 
 function Anuncio({ codAnuncio }: IProps) {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [anuncio, setAnuncio] = useState<IAnunciosData>({} as IAnunciosData);
 
@@ -78,7 +81,9 @@ function Anuncio({ codAnuncio }: IProps) {
                         {anuncio.tel ? (
                             <TopicsArea>
                                 <Topic>Contato:</Topic>
-                                <TopicText>{anuncio.tel}</TopicText>
+                                <TopicText>
+                                    {telefonePattern(anuncio.tel)}
+                                </TopicText>
                             </TopicsArea>
                         ) : (
                             <></>
@@ -88,6 +93,9 @@ function Anuncio({ codAnuncio }: IProps) {
                                 buttonSize="small"
                                 caption="Mais informações"
                                 buttonType="tertiary"
+                                onClick={() =>
+                                    navigate(`/anuncio/${codAnuncio}`)
+                                }
                             />
                         </ButtonArea>
                     </RigthSide>
