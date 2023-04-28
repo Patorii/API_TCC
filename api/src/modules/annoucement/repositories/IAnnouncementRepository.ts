@@ -7,7 +7,7 @@ interface IFotoPrincipal {
 }
 
 interface IListData {
-    cod_anuncio?: number;
+    cod_anuncio: number;
     cod_usuario: number;
     cod_animal: number;
     descricao: string;
@@ -19,8 +19,19 @@ interface IListData {
     numero: number;
     complemento: string;
     data_anuncio: Date;
-    created_at?: Date;
-    updated_at?: Date;
+    tel: string;
+    tel2: string;
+    tipo: "A" | "P";
+    nome_animal: string;
+    especie: "C" | "G";
+    idade: string;
+    raca: string;
+    cor: string;
+    sexo: "F" | "M";
+    nome: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
     foto_principal: IFotoPrincipal;
 }
 interface IList {
@@ -42,7 +53,8 @@ interface IAnnouncementRepository {
         uf?: string,
         especie?: "C" | "G",
         raca?: string,
-        tipo?: "A" | "P"
+        tipo?: "A" | "P",
+        sexo?: "F" | "M"
     ): Promise<IList>;
     delete(cod_anuncio: number): Promise<void>;
 }

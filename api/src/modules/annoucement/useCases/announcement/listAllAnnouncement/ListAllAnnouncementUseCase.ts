@@ -11,6 +11,7 @@ interface IRequest {
     especie?: "C" | "G";
     raca?: string;
     tipo?: "A" | "P";
+    sexo?: "F" | "M";
 }
 interface IPhotoBase64 {
     foto: string;
@@ -18,7 +19,7 @@ interface IPhotoBase64 {
 }
 
 interface IListData {
-    cod_anuncio?: number;
+    cod_anuncio: number;
     cod_usuario: number;
     cod_animal: number;
     descricao: string;
@@ -30,8 +31,19 @@ interface IListData {
     numero: number;
     complemento: string;
     data_anuncio: Date;
-    created_at?: Date;
-    updated_at?: Date;
+    tel: string;
+    tel2: string;
+    tipo: "A" | "P";
+    nome_animal: string;
+    especie: "C" | "G";
+    idade: string;
+    raca: string;
+    cor: string;
+    sexo: "F" | "M";
+    nome: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
     foto_principal: IPhotoBase64;
 }
 interface IList {
@@ -58,6 +70,7 @@ class ListAllAnnouncementUseCase {
         especie,
         raca,
         tipo,
+        sexo,
     }: IRequest): Promise<IList> {
         const Announcement = await this.AnnouncementRepository.listAll(
             page,
@@ -66,7 +79,8 @@ class ListAllAnnouncementUseCase {
             uf,
             especie,
             raca,
-            tipo
+            tipo,
+            sexo
         );
 
         const treatedAnnouncement = [{} as IListData];

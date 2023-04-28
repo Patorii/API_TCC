@@ -14,7 +14,7 @@ interface IFotoPrincipal {
 }
 
 interface IListData {
-    cod_anuncio?: number;
+    cod_anuncio: number;
     cod_usuario: number;
     cod_animal: number;
     descricao: string;
@@ -26,8 +26,19 @@ interface IListData {
     numero: number;
     complemento: string;
     data_anuncio: Date;
-    created_at?: Date;
-    updated_at?: Date;
+    tel: string;
+    tel2: string;
+    tipo: "A" | "P";
+    nome_animal: string;
+    especie: "C" | "G";
+    idade: string;
+    raca: string;
+    cor: string;
+    sexo: "F" | "M";
+    nome: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
     foto_principal: IFotoPrincipal;
 }
 interface IList {
@@ -72,7 +83,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
     async findById(cod_anuncio: number): Promise<Announcement> {
         try {
             let sql =
-                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
+                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, animais.sexo, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
                 "WHERE  anuncios.cod_anuncio = ?? AND anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario ";
@@ -94,12 +105,13 @@ class AnnouncementRepository implements IAnnouncementRepository {
         uf?: string,
         especie?: "C" | "G",
         raca?: string,
-        tipo?: "A" | "P"
+        tipo?: "A" | "P",
+        sexo?: "F" | "M"
     ): Promise<IList> {
         try {
             // criando o SQL principal
             let sql =
-                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, usuarios.nome, usuarios.email ";
+                "SELECT anuncios.*, animais.nome as nome_animal, animais.especie, animais.idade, animais.raca, animais.cor, animais.sexo, usuarios.nome, usuarios.email ";
             sql += "FROM  anuncios, animais, usuarios ";
             sql +=
                 "WHERE  anuncios.cod_animal = animais.cod_animal  AND anuncios.cod_usuario = usuarios.cod_usuario";
@@ -115,6 +127,9 @@ class AnnouncementRepository implements IAnnouncementRepository {
             }
             if (tipo) {
                 sql += ` AND anuncios.tipo = "${tipo}"`;
+            }
+            if (sexo) {
+                sql += ` AND animais.sexo = "${sexo}"`;
             }
 
             const orderBy = order.split(" ");

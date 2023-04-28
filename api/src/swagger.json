@@ -408,6 +408,10 @@
                                     },
                                     "cor": {
                                         "type": "string"
+                                    },
+                                    "sexo": {
+                                        "type": "string",
+                                        "default": ["F", "M"]
                                     }
                                 }
                             }
@@ -443,6 +447,10 @@
                                         },
                                         "cor": {
                                             "type": "string"
+                                        },
+                                        "sexo": {
+                                            "type": "string",
+                                            "default": ["F", "M"]
                                         }
                                     }
                                 }
@@ -493,6 +501,10 @@
                                     },
                                     "cor": {
                                         "type": "string"
+                                    },
+                                    "sexo": {
+                                        "type": "string",
+                                        "default": ["F", "M"]
                                     }
                                 }
                             }
@@ -528,6 +540,10 @@
                                         },
                                         "cor": {
                                             "type": "string"
+                                        },
+                                        "sexo": {
+                                            "type": "string",
+                                            "default": ["F", "M"]
                                         }
                                     }
                                 }
@@ -576,6 +592,10 @@
                                         },
                                         "cor": {
                                             "type": "string"
+                                        },
+                                        "sexo": {
+                                            "type": "string",
+                                            "default": ["F", "M"]
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -780,6 +800,10 @@
                                     },
                                     "uf": {
                                         "type": "string"
+                                    },
+                                    "sexo": {
+                                        "type": "string",
+                                        "default": ["F", "M"]
                                     }
                                 }
                             }
@@ -856,6 +880,10 @@
                                                 "cor": {
                                                     "type": "string"
                                                 },
+                                                "sexo": {
+                                                    "type": "string",
+                                                    "default": ["F", "M"]
+                                                },
                                                 "nome": {
                                                     "type": "string"
                                                 },
@@ -920,6 +948,7 @@
                                                 "idade": "5",
                                                 "raca": "SHIH TZU",
                                                 "cor": "branco e marrom",
+                                                "sexo": "M",
                                                 "nome": "Patrick Rossetto",
                                                 "email": "patrickrossetto01@gmail.com",
                                                 "foto_principal": {
@@ -1145,6 +1174,10 @@
                                         },
                                         "cor": {
                                             "type": "string"
+                                        },
+                                        "sexo": {
+                                            "type": "string",
+                                            "default": ["F", "M"]
                                         },
                                         "nome": {
                                             "type": "string"

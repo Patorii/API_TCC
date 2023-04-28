@@ -38,8 +38,11 @@ export interface IAnunciosData {
     idade: string;
     raca: string;
     cor: string;
+    sexo: 'F' | 'M';
     nome: string;
     email: string;
+    created_at: string;
+    updated_at: string;
     foto_principal: IFotoAnuncio;
 }
 

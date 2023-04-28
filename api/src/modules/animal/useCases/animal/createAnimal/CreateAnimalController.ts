@@ -20,6 +20,14 @@ class CreateAnimalController {
                 );
             }
         }
+        if (data.sexo) {
+            data.sexo = data.sexo.toUpperCase();
+            if (data.sexo !== "F" && data.sexo !== "M") {
+                throw new AppError(
+                    "O sexo informado não é compativel deve ser informado: 'F' para femea ou 'M' para macho"
+                );
+            }
+        }
         const createAnimalUseCase = container.resolve(CreateAnimalUseCase);
 
         const animal = await createAnimalUseCase.execute(data);

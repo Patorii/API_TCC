@@ -6,6 +6,7 @@ class Animal {
     idade: string;
     raca: string;
     cor: string;
+    sexo: "F" | "M";
     created_at?: Date;
     updated_at?: Date;
 

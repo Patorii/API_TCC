@@ -11,6 +11,7 @@ interface IRequest {
     idade: string;
     raca: string;
     cor: string;
+    sexo: "F" | "M";
 }
 
 @injectable()
