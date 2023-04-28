@@ -28,6 +28,15 @@ export const Card = styled.div`
     border-radius: 10px;
     cursor: pointer;
     user-select: none;
+    transition: 0.5s transform;
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.4);
+
+    &:hover {
+        transform: scale(1.05);
+    }
+    &:hover > img {
+        transform: scale(1.02);
+    }
 `;
 
 export const CardImage = styled.img`
@@ -35,6 +44,7 @@ export const CardImage = styled.img`
     width: 100%;
     height: 160px;
     border-radius: 10px;
+    transition: 0.5s transform;
 `;
 
 export const CardTitle = styled.p`

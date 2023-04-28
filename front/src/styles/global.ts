@@ -19,11 +19,14 @@ body{
 
     /* cores */
     --grey-blue: #F2F7FF;
+    --grey-100: #EDEDED;
+    --grey-300: #CFCFCF;
     --white: #ffffff;
     --black: #060606;
     --dark-blue: #122e5d;
     --blue-bootstrap: #0d6efd;
     --cyan-100: #3ECFF0;
+    --red: #E70000/
 }
 
 *{

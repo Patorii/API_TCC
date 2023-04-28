@@ -24,12 +24,11 @@ export const Wrapper = styled.div<IToggleFilter>`
 `;
 export const FilterArea = styled.div<IToggleFilter>`
     position: relative;
-
     width: ${({ show }) => (show ? '250px' : '0px')};
     height: auto;
     background-color: var(--dark-blue);
     border-radius: 0px 0px 10px 0px;
-    padding: 12px 8px 24px 16px;
+    padding: 12px 12px 24px 16px;
     transition: 2s width;
 `;
 

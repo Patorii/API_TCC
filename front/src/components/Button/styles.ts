@@ -64,7 +64,7 @@ export const Botao = styled.button<IButtonProps>`
         ${(props) => {
             switch (props.buttonType) {
                 case 'primary':
-                    return `background-color: ${darken(0.1, '#ffffff')} ;`;
+                    return `background-color: ${darken(0.15, '#3ECFF0')} ;`;
                 case 'secondary':
                     return `background-color: ${darken(0.15, '#ffffff')} ;`;
                 case 'warning':
