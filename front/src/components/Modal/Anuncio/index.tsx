@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '../styles';
+import {
+    ButtonArea,
+    Container,
+    Description,
+    InformationLine,
+    RigthSideTitle,
+    Topic,
+    TopicText,
+    TopicsArea,
+} from './styles';
 import apiPets, { IAnunciosData } from '../../../services/apiPets';
-import { Image, LeftSide, PetName } from './styles';
+import { Image, LeftSide, PetName, RigthSide } from './styles';
+import { Loader } from '../../Loading';
+import { Text } from '../../Text';
+import { Button } from '../../Button';
 
 interface IProps {
     codAnuncio: number;
 }
 
 function Anuncio({ codAnuncio }: IProps) {
+    const [loading, setLoading] = useState<boolean>(false);
     const [anuncio, setAnuncio] = useState<IAnunciosData>({} as IAnunciosData);
 
     async function getAnuncio(codAnuncio: number) {
+        setLoading(true);
         const resp = await apiPets
-            .get(`/aanouncement/${codAnuncio}`)
+            .get(`/announcements/${codAnuncio}`)
             .then((resp) => resp.data);
         setAnuncio(resp);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -22,12 +37,62 @@ function Anuncio({ codAnuncio }: IProps) {
     }, []);
     return (
         <Container>
-            <LeftSide>
-                <Image
-                    src={`data:image/jpeg;base64,${anuncio.foto_principal.foto}`}
-                />
-                <PetName>{anuncio.nome_animal}</PetName>
-            </LeftSide>
+            {loading ? (
+                <Loader width="128px" height="128px" />
+            ) : (
+                <Container>
+                    <LeftSide>
+                        <Image
+                            src={`data:image/jpeg;base64,${anuncio.foto_principal?.foto}`}
+                        />
+                        <PetName>{anuncio.nome_animal}</PetName>
+                    </LeftSide>
+                    <RigthSide>
+                        <RigthSideTitle>
+                            Sobre {anuncio.nome_animal}
+                        </RigthSideTitle>
+                        <Description>{anuncio.descricao}</Description>
+                        <InformationLine>
+                            <TopicsArea>
+                                <Topic>Sexo:</Topic>
+                                <TopicText>
+                                    {anuncio.sexo === 'F' ? 'Femea' : 'Macho'}
+                                </TopicText>
+                            </TopicsArea>
+                            <TopicsArea>
+                                <Topic>Raça:</Topic>
+                                <TopicText>{anuncio.raca}</TopicText>
+                            </TopicsArea>
+                        </InformationLine>
+
+                        <TopicsArea>
+                            <Topic>Idade:</Topic>
+                            <TopicText>{anuncio.idade}</TopicText>
+                        </TopicsArea>
+
+                        <TopicsArea>
+                            <Topic>Dono:</Topic>
+                            <TopicText>{anuncio.nome}</TopicText>
+                        </TopicsArea>
+
+                        {anuncio.tel ? (
+                            <TopicsArea>
+                                <Topic>Contato:</Topic>
+                                <TopicText>{anuncio.tel}</TopicText>
+                            </TopicsArea>
+                        ) : (
+                            <></>
+                        )}
+                        <ButtonArea>
+                            <Button
+                                buttonSize="small"
+                                caption="Mais informações"
+                                buttonType="tertiary"
+                            />
+                        </ButtonArea>
+                    </RigthSide>
+                </Container>
+            )}
         </Container>
     );
 }

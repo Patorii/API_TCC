@@ -28,10 +28,10 @@ export interface IAnunciosData {
     bairro: string;
     endereco: string;
     numero: number;
-    complemento: string;
+    complemento?: string;
     data_anuncio: Date;
-    tel: string;
-    tel2: string;
+    tel?: string;
+    tel2?: string;
     tipo: 'A' | 'P';
     nome_animal: string;
     especie: 'C' | 'G';

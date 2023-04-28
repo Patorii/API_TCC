@@ -20,8 +20,8 @@ function converteCorFundo(corEscolhida: string | undefined) {
     if (corEscolhida === 'secondary') {
         return 'var(--white)';
     }
-    if (corEscolhida === 'warning') {
-        return 'var(--yellow-600)';
+    if (corEscolhida === 'tertiary') {
+        return 'var(--dark-blue)';
     } else {
         return 'var(--cyan-100)';
     }
@@ -30,8 +30,8 @@ function converteCorEscrita(corEscolhida: string | undefined) {
     if (corEscolhida === 'secondary') {
         return 'var(--black)';
     }
-    if (corEscolhida === 'warning') {
-        return 'var(--brown-800)';
+    if (corEscolhida === 'tertiary') {
+        return 'var(--grey-blue)';
     } else {
         return 'var(--black)';
     }
@@ -55,7 +55,7 @@ export const Botao = styled.button<IButtonProps>`
                 return `none;`;
             case 'secondary':
                 return `solid 1px ${converteCorEscrita(buttonType)};`;
-            case 'warning':
+            case 'tertiary':
                 return `solid 1px ${converteCorEscrita(buttonType)};`;
         }
     }};
@@ -67,18 +67,21 @@ export const Botao = styled.button<IButtonProps>`
                     return `background-color: ${darken(0.15, '#3ECFF0')} ;`;
                 case 'secondary':
                     return `background-color: ${darken(0.15, '#ffffff')} ;`;
-                case 'warning':
-                    return `background-color: ${darken(0.1, '#FFAE11')} ;`;
+                case 'tertiary':
+                    return `
+                    background-color: var(--white);
+                    border: solid 1px var(--dark-blue);
+                    `;
             }
         }}
+    }
+    &:hover > span {
+        ${(props) =>
+            props.buttonType === 'tertiary' ? 'color: var(--dark-blue);' : ''}
     }
 `;
 
 export const Span = styled.span<IButtonProps>`
-    margin: ${({ buttonType }) =>
-        buttonType === 'warning' ? '0px 8px' : '0px 12px;'};
-    font-size: ${({ buttonType }) =>
-        buttonType === 'warning' ? '20px' : '16px'};
     font-weight: 700;
     color: ${({ buttonType }) => converteCorEscrita(buttonType)};
 `;
