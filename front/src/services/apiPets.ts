@@ -22,7 +22,7 @@ export interface IAnunciosData {
     cod_usuario: number;
     cod_animal: number;
     descricao: string;
-    cep: number;
+    cep: string;
     uf: string;
     cidade: string;
     bairro: string;
@@ -73,7 +73,7 @@ export interface ICriaAnuncio {
     cod_animal: number;
     tipo: 'A' | 'P';
     descricao: string;
-    cep: number;
+    cep: string;
     uf: string;
     cidade: string;
     bairro: string;
@@ -83,4 +83,12 @@ export interface ICriaAnuncio {
     data_anuncio: Date;
     created_at?: Date;
     updated_at?: Date;
+}
+
+export interface IUser {
+    cod_usuario: string | number;
+    cpf: string;
+    cnpj: string;
+    nome: string;
+    email: string;
 }

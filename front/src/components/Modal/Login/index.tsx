@@ -61,14 +61,14 @@ function Login({ closeFunction, openRegisterModal }: IProps) {
             const signed = await Signin({ ...data });
 
             if (signed) {
-                navigate('homel');
+                navigate('/');
             }
             setLoading(false);
             closeFunction();
         } catch (err: any) {
             setValue('password', '');
-            setRetorno(err);
             setLoading(false);
+            setRetorno(err.message || err);
         }
     };
     return (

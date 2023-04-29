@@ -1,7 +1,7 @@
 interface IUserDTO {
     cod_usuario?: string | number;
-    cpf: number;
-    cnpj: number;
+    cpf: string;
+    cnpj: string;
     nome: string;
     senha?: string;
     email: string;

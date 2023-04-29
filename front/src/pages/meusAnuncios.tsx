@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import apiPets, { IAnuncios } from '../services/apiPets';
-import { Grid } from '../components/Grid';
 import { Main } from '../components/Main';
 import { useMain } from '../context/main';
-import { CenterLoader } from './styles';
 import { Loader } from '../components/Loading';
+import { CenterLoader } from './styles';
+import { useAuth } from '../context/auth';
+import { EditGrid } from '../components/EditGrid';
 
 interface IFilterOptions {
     tipo: string;
@@ -14,16 +15,17 @@ interface IFilterOptions {
     uf: string | number;
 }
 
-function HomeLogado() {
+function MeusAnuncios() {
+    const { user } = useAuth();
     const [anuncios, setAnuncios] = useState<IAnuncios>({} as IAnuncios);
-    const [loading, setLoading] = useState<boolean>(false);
-
     const { filterOptions, refreshMainGet } = useMain();
+    const [loading, setLoading] = useState<boolean>(false);
 
     async function getAnuncios(data: IFilterOptions) {
         setLoading(true);
+
         await apiPets
-            .patch('/announcements', data)
+            .patch(`/announcements/ofuser/${user.cod_usuario}`, data)
             .then((resp) => setAnuncios(resp.data));
         setLoading(false);
     }
@@ -39,10 +41,10 @@ function HomeLogado() {
                     <Loader width="128px" height="128px" />
                 </CenterLoader>
             ) : (
-                <Grid anuncios={anuncios.data} />
+                <EditGrid anuncios={anuncios.data} />
             )}
         </Main>
     );
 }
 
-export { HomeLogado };
+export { MeusAnuncios };

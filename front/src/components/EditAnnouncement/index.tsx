@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     Form,
@@ -19,14 +19,38 @@ import { Radio } from '../Radio/Index';
 import { SelectGroup } from '../Form/SelectInputGroup';
 import { UF } from '../../constants/estados';
 import { TextAreaGroup } from '../Form/TextAreaGroup';
-import { FileInputGroup } from '../Form/FileInputGroup';
 import { Button } from '../Button';
-import apiPets, { IAnimal, ICriaAnuncio } from '../../services/apiPets';
+import apiPets, { IAnimal, IAnunciosData } from '../../services/apiPets';
 import { useNavigate } from 'react-router-dom';
 
-function CreateAnnouncement() {
-    const [loading, setLoading] = useState<boolean>(false);
+interface IProps {
+    codAnuncio: number;
+}
+function EditAnnouncement({ codAnuncio }: IProps) {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [anuncioData, setAnuncioData] = useState<IAnunciosData>(
+        {} as IAnunciosData
+    );
+
+    async function getAnuncio(codAnuncio: number) {
+        setLoading(true);
+        const resp = await apiPets
+            .get(`/announcements/${codAnuncio}`)
+            .then((resp) => resp.data);
+        setAnuncioData({ ...resp, raca: resp.raca.toLowerCase() });
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        getAnuncio(codAnuncio);
+    }, []);
+    useEffect(() => {
+        reset({
+            ...anuncioData,
+            animal: anuncioData.nome_animal,
+        });
+    }, [anuncioData]);
 
     type AnnouncementFormFields = {
         animal: string;
@@ -46,7 +70,6 @@ function CreateAnnouncement() {
         complemento: string;
         tel: string;
         tel2: string;
-        foto: FileList;
     };
 
     const schema = yup.object().shape({
@@ -72,13 +95,13 @@ function CreateAnnouncement() {
         complemento: yup.string(),
         tel: yup.string().required('Ao menos um telefone deve ser informado'),
         tel2: yup.string(),
-        foto: yup.mixed().required('Uma foto deve ser adicionada'),
     });
 
     const {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm<AnnouncementFormFields>({
         resolver: yupResolver(schema),
         defaultValues: {
@@ -90,9 +113,8 @@ function CreateAnnouncement() {
 
     const onSubmit: SubmitHandler<AnnouncementFormFields> = async (data) => {
         try {
-            setLoading(true);
             const animal: IAnimal = await apiPets
-                .post('/animal', {
+                .patch(`/animal${anuncioData.cod_animal}`, {
                     especie: data.especie,
                     nome: data.animal,
                     idade: data.idade,
@@ -102,8 +124,8 @@ function CreateAnnouncement() {
                 })
                 .then((resp) => resp.data);
 
-            const anuncio: ICriaAnuncio = await apiPets
-                .post('/announcements', {
+            await apiPets
+                .patch(`/announcements/${anuncioData}`, {
                     cod_animal: animal.cod_animal,
                     tipo: data.tipo,
                     descricao: data.descricao,
@@ -118,20 +140,7 @@ function CreateAnnouncement() {
                     tel2: data.tel2,
                 })
                 .then((resp) => resp.data);
-
-            apiPets.post(
-                `/announcements/${anuncio.cod_anuncio}/photos`,
-                { foto: data.foto[0] },
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
-            setLoading(false);
-            navigate('/meusanuncios');
         } catch (err) {
-            setLoading(false);
             console.log(err);
         }
     };
@@ -334,28 +343,17 @@ function CreateAnnouncement() {
                 </InputLine>
                 <InputLine>
                     <InputColumn>
-                        <InputArea>
-                            <FileInputGroup
-                                label="Adicione uma foto"
-                                name="foto"
-                                type="file"
-                                register={register}
-                                errors={errors.foto}
-                                buttonType="secondary"
-                            />
-                        </InputArea>
                         <SubmitBtnArea>
                             <Button
                                 buttonKind="submit"
-                                caption="Anúnciar"
+                                caption="Salvar alterações"
                                 buttonType="tertiary"
                                 loading={loading}
                             />
                             <Button
-                                buttonKind="submit"
                                 caption="Cancelar"
                                 buttonType="tertiary"
-                                onClick={() => navigate('/')}
+                                onClick={() => navigate('/meusanuncios')}
                             />
                         </SubmitBtnArea>
                     </InputColumn>
@@ -365,4 +363,4 @@ function CreateAnnouncement() {
     );
 }
 
-export { CreateAnnouncement };
+export { EditAnnouncement };

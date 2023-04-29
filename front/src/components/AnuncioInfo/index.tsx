@@ -145,7 +145,7 @@ function AnuncioInfo({ codAnuncio }: IProps) {
                             caption="Voltar"
                             buttonType="tertiary"
                             onClick={() =>
-                                signed ? navigate('/homel') : navigate('/')
+                                signed ? navigate('/') : navigate('/')
                             }
                         />
                     </ButtonArea>

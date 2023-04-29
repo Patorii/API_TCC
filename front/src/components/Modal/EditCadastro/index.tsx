@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     ErrorText,
@@ -19,24 +19,30 @@ import { useNavigate } from 'react-router-dom';
 import { Radio } from '../../Radio/Index';
 import { RadioTitle, RadiosDiv } from '../../CreateAnnouncement/styles';
 import { useAuth } from '../../../context/auth';
-import apiPets from '../../../services/apiPets';
+import apiPets, { IUser } from '../../../services/apiPets';
 
 interface IProps {
     closeFunction: () => void;
+    openEditSenha: () => void;
 }
-function Cadastro({ closeFunction }: IProps) {
-    const { Signin } = useAuth();
-    const navigate = useNavigate();
+function EditCadastro({ closeFunction, openEditSenha }: IProps) {
+    const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [retorno, setRetorno] = useState('');
     const [pessoa, setPessoa] = useState('pf');
+
+    const [userData, setUserData] = useState<IUser>({} as IUser);
+
+    async function getUser() {
+        await apiPets
+            .get(`/users/${user.cod_usuario}`)
+            .then((resp) => setUserData(resp.data));
+    }
 
     type RegisterFormFields = {
         nome: string;
         doc: string;
         email: string;
-        password: string;
-        confirmPassword: string;
         pessoa: string;
     };
     const schema = yup.object().shape({
@@ -44,31 +50,16 @@ function Cadastro({ closeFunction }: IProps) {
         pessoa: yup.string().required('Deve ser selecionado'),
         email: yup.string().required('O e-mail deve ser informado'),
         doc: yup.string().required('O campo precisa ser preenchido'),
-        password: yup
-            .string()
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                'A senha deve ter no mínimo 6 caracteres, contendo pelo menos: 1 letramaiúscula, 1 letra minúscula, 1 número e 1 símbolo.'
-            )
-            .required('A senha deve ser informada'),
-        confirmPassword: yup
-            .string()
-            .required('A confirmação da senha deve ser informada')
-            .oneOf(
-                [yup.ref('password')],
-                'A senha digitada precisa ser igual a senha digitada no campo senha'
-            ),
     });
 
     const {
         register,
         formState: { errors },
+        reset,
+        setValue,
         handleSubmit,
     } = useForm<RegisterFormFields>({
         resolver: yupResolver(schema),
-        defaultValues: {
-            pessoa: 'pf',
-        },
     });
     const onSubmit: SubmitHandler<RegisterFormFields> = async (data) => {
         try {
@@ -79,40 +70,41 @@ function Cadastro({ closeFunction }: IProps) {
             } else {
                 cnpj = data.doc;
             }
-            const user = await apiPets
-                .post('/users', {
+            await apiPets
+                .post(`/users/${user.cod_usuario}`, {
                     nome: data.nome,
                     email: data.email,
                     cpf: cpf,
                     cnpj: cnpj,
-                    senha: data.password,
                 })
                 .then((resp) => resp);
 
-            if (user.data) {
-                const signed = await Signin({
-                    email: data.email,
-                    password: data.password,
-                });
-
-                if (signed) {
-                    navigate('/');
-                }
-                setLoading(false);
-                closeFunction();
-            }
+            setLoading(false);
+            closeFunction();
         } catch (err: any) {
             setLoading(false);
             setRetorno(err.response.data);
         }
     };
 
+    useEffect(() => {
+        getUser();
+    }, []);
+    useEffect(() => {
+        reset({
+            ...userData,
+            pessoa: userData.cpf ? 'pf' : 'pj',
+            doc: userData.cpf ? userData.cpf : userData.cnpj,
+        });
+    }, [userData]);
+
     function radioChange(e: React.ChangeEvent<HTMLInputElement>) {
         setPessoa(e.target.value);
+        setValue('doc', '');
     }
     return (
         <Container onSubmit={handleSubmit(onSubmit)}>
-            <Text size="large">Cadastre a sua conta</Text>
+            <Text size="large">Alterar a sua conta</Text>
             <Form>
                 <InputArea>
                     <TextInputGroup
@@ -177,36 +169,26 @@ function Cadastro({ closeFunction }: IProps) {
                         />
                     </InputArea>
                 )}
-                <InputArea>
-                    <TextInputGroup
-                        name="password"
-                        label="Senha"
-                        register={register}
-                        errors={errors.password}
-                        type="password"
-                    />
-                </InputArea>
-                <InputArea>
-                    <TextInputGroup
-                        name="confirmPassword"
-                        label="Confirme sua senha"
-                        register={register}
-                        errors={errors.confirmPassword}
-                        type="password"
-                    />
-                </InputArea>
                 <ErrorText>{retorno}</ErrorText>
                 <LoginBtnArea>
                     <Button
-                        caption="Cadastrar"
+                        caption="Salvar"
                         buttonType="primary"
                         buttonKind="submit"
                         loading={loading}
                     />
                 </LoginBtnArea>
+
+                <RegisterBtnArea>
+                    <Button
+                        caption="Alterar senha"
+                        buttonType="secondary"
+                        onClick={() => openEditSenha()}
+                    />
+                </RegisterBtnArea>
             </Form>
         </Container>
     );
 }
 
-export { Cadastro };
+export { EditCadastro };

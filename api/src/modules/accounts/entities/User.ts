@@ -2,8 +2,8 @@ import { v4 as uuidV4 } from "uuid";
 
 class User {
     cod_usuario?: string | number;
-    cpf: number;
-    cnpj: number;
+    cpf: string;
+    cnpj: string;
     nome: string;
     senha?: string;
     email: string;

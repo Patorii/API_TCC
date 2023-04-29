@@ -22,6 +22,9 @@ function converteCorFundo(corEscolhida: string | undefined) {
     }
     if (corEscolhida === 'tertiary') {
         return 'var(--dark-blue)';
+    }
+    if (corEscolhida === 'danger') {
+        return 'var(--white)';
     } else {
         return 'var(--cyan-100)';
     }
@@ -32,6 +35,9 @@ function converteCorEscrita(corEscolhida: string | undefined) {
     }
     if (corEscolhida === 'tertiary') {
         return 'var(--grey-blue)';
+    }
+    if (corEscolhida === 'danger') {
+        return 'var(--red)';
     } else {
         return 'var(--dark-blue)';
     }
@@ -57,6 +63,8 @@ export const Botao = styled.button<IButtonProps>`
                 return `solid 1px ${converteCorEscrita(buttonType)};`;
             case 'tertiary':
                 return `solid 1px ${converteCorEscrita(buttonType)};`;
+            case 'danger':
+                return `solid 1px ${converteCorEscrita(buttonType)};`;
         }
     }};
 
@@ -72,12 +80,18 @@ export const Botao = styled.button<IButtonProps>`
                     background-color: var(--white);
                     border: solid 1px var(--dark-blue);
                     `;
+                case 'danger':
+                    return `
+                    background-color: var(--red) ;
+                    `;
             }
         }}
     }
     &:hover > span {
         ${(props) =>
             props.buttonType === 'tertiary' ? 'color: var(--dark-blue);' : ''}
+        ${(props) =>
+            props.buttonType === 'danger' ? 'color: var(--white);' : ''}
     }
 `;
 

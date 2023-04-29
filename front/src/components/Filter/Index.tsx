@@ -103,7 +103,7 @@ function Filter() {
         if (data.raca === '-1') {
             data.raca = '';
         }
-        if (data.uf === '-1') {
+        if (data.uf === '-1' || data.uf === -1) {
             data.uf = '';
         }
 

@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/home';
 import { Layout } from './components/Layout';
 import { useAuth } from './context/auth';
-import { HomeLogado } from './pages/homeLogado';
+
 import { PageAnuncio } from './pages/anuncio';
 import { CriarAnuncio } from './pages/criarAnuncio';
+import { MeusAnuncios } from './pages/meusAnuncios';
+import { AlterarAnuncio } from './pages/alterAnuncio';
 
 interface IProtectedRoutes {
     user: boolean;
@@ -29,18 +31,26 @@ function AppRoutes() {
                     <Route index element={<Home />} />
                     <Route path="anuncio/:id" element={<PageAnuncio />} />
                     <Route
-                        path="homel"
-                        element={
-                            <ProtectedRoute user={signed}>
-                                <HomeLogado />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
                         path="anuncio"
                         element={
                             <ProtectedRoute user={signed}>
                                 <CriarAnuncio />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="meusanuncios"
+                        element={
+                            <ProtectedRoute user={signed}>
+                                <MeusAnuncios />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="editanuncio/:id"
+                        element={
+                            <ProtectedRoute user={signed}>
+                                <AlterarAnuncio />
                             </ProtectedRoute>
                         }
                     />

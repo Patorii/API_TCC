@@ -56,6 +56,17 @@ interface IAnnouncementRepository {
         tipo?: "A" | "P",
         sexo?: "F" | "M"
     ): Promise<IList>;
+    listAllByUser(
+        cod_usuario: number,
+        page: number,
+        limit: number,
+        order: string,
+        uf?: string,
+        especie?: "C" | "G",
+        raca?: string,
+        tipo?: "A" | "P",
+        sexo?: "F" | "M"
+    ): Promise<IList>;
     delete(cod_anuncio: number): Promise<void>;
 }
 

@@ -3,6 +3,7 @@ import { CreateAnnouncementController } from "@modules/annoucement/useCases/anno
 import { DeleteAnnouncementController } from "@modules/annoucement/useCases/announcement/deleteAnnouncement/DeleteAnnouncementController";
 import { GetAnnouncementController } from "@modules/annoucement/useCases/announcement/getAnnouncement/GetAnnouncementController";
 import { ListAllAnnouncementController } from "@modules/annoucement/useCases/announcement/listAllAnnouncement/ListAllAnnouncementController";
+import { ListAllByUserAnnouncementController } from "@modules/annoucement/useCases/announcement/listAllByUserAnnouncement/ListAllAnnouncementController";
 import { UpdateAnnouncementController } from "@modules/annoucement/useCases/announcement/updateAnnoucement/UpdateAnnoucementController";
 import { CreateAnnouncementPhotosController } from "@modules/annoucement/useCases/announcementPhotos/createAnnouncementPhotos/CreateAnnouncementPhotosController";
 import { DeleteAnnouncementPhotosController } from "@modules/annoucement/useCases/announcementPhotos/deleteAnnouncementPhotos/DeleteAnnouncementPhotosController";
@@ -21,6 +22,8 @@ const createAnnouncementController = new CreateAnnouncementController();
 const updateAnnouncementController = new UpdateAnnouncementController();
 const deleteAnnouncementController = new DeleteAnnouncementController();
 const listAllAnnouncementController = new ListAllAnnouncementController();
+const listAllByUserAnnouncementController =
+    new ListAllByUserAnnouncementController();
 const getAnnouncementController = new GetAnnouncementController();
 
 // AnnouncementPhotos
@@ -76,6 +79,10 @@ announcementRoutes.post(
     "/",
     isAuthenticated,
     createAnnouncementController.handle
+);
+announcementRoutes.patch(
+    "/ofuser/:codusuario",
+    listAllByUserAnnouncementController.handle
 );
 announcementRoutes.patch(
     "/:codanuncio",

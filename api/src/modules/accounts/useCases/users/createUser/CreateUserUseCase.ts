@@ -10,8 +10,8 @@ const passwordComplexity = require("joi-password-complexity");
 
 interface IRequest {
     nome: string;
-    cpf: number;
-    cnpj: number;
+    cpf: string;
+    cnpj: string;
     email: string;
     senha?: string;
     cod_usuario?: number | string;

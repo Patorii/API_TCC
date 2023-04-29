@@ -7,7 +7,7 @@ import { Loader } from '../Loading';
 interface IButtonProps {
     caption?: string;
     buttonSize?: 'small' | 'medium' | 'large';
-    buttonType?: 'primary' | 'secondary' | 'tertiary';
+    buttonType?: 'primary' | 'secondary' | 'tertiary' | 'danger';
     buttonKind?: 'button' | 'submit';
     disabled?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
