@@ -25,7 +25,7 @@ function SelectGroup({
     ...props
 }: ISelectGroupProps) {
     return (
-        <label htmlFor={name}>
+        <label style={{ width: '100%' }} htmlFor={name}>
             {label !== '' && (
                 <Text isInputLabel isInvalid={!!errors}>
                     {label}

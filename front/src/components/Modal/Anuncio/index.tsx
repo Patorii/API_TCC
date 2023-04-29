@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     ButtonArea,
     Container,
+    ConteinerLoader,
     Description,
     InformationLine,
     RigthSideTitle,
@@ -31,7 +32,7 @@ function Anuncio({ codAnuncio }: IProps) {
         const resp = await apiPets
             .get(`/announcements/${codAnuncio}`)
             .then((resp) => resp.data);
-        setAnuncio(resp);
+        setAnuncio({ ...resp, raca: resp.raca.toLowerCase() });
         setLoading(false);
     }
 
@@ -41,7 +42,9 @@ function Anuncio({ codAnuncio }: IProps) {
     return (
         <Container>
             {loading ? (
-                <Loader width="128px" height="128px" />
+                <ConteinerLoader>
+                    <Loader width="128px" height="128px" />
+                </ConteinerLoader>
             ) : (
                 <Container>
                     <LeftSide>
@@ -64,7 +67,9 @@ function Anuncio({ codAnuncio }: IProps) {
                             </TopicsArea>
                             <TopicsArea>
                                 <Topic>Raça:</Topic>
-                                <TopicText>{anuncio.raca}</TopicText>
+                                <TopicText capitalize={true}>
+                                    {anuncio.raca}
+                                </TopicText>
                             </TopicsArea>
                         </InformationLine>
 

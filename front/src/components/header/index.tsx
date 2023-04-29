@@ -23,7 +23,7 @@ export function Header() {
             <Container>
                 <IconArea
                     onClick={() =>
-                        signed ? navigate('/lhome') : navigate('/')
+                        signed ? navigate('/homel') : navigate('/')
                     }
                 >
                     <GiDogHouse size={48} color="var(--white)" />
@@ -34,6 +34,7 @@ export function Header() {
                             <Button
                                 caption="Criar anúncio"
                                 buttonType="secondary"
+                                onClick={() => navigate('/anuncio')}
                             />
                         </ButtonsArea>
                         <ButtonsArea width="170px">

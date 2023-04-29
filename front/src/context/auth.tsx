@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 
 import apiPets from '../services/apiPets';
 
@@ -46,6 +52,19 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         localStorage.removeItem('apeti:Token');
         localStorage.removeItem('apeti:User');
     }
+    function loadStorage() {
+        const refreshToken = localStorage.getItem('apeti:RefreshToken');
+        const token = localStorage.getItem('apeti:Token');
+        const user = localStorage.getItem('apeti:User');
+        if (user && token && refreshToken) {
+            setUser(JSON.parse(user));
+            setToken(token);
+            setRefreshToken(refreshToken);
+        }
+    }
+    useEffect(() => {
+        loadStorage();
+    }, []);
 
     async function Signin(data: ISigninProps) {
         try {

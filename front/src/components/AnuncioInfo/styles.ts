@@ -82,3 +82,9 @@ export const TopicText = styled.span<ITopicTextProps>`
     color: var(--dark-blue);
     text-transform: ${({ capitalize }) => (capitalize ? 'capitalize' : '')};
 `;
+
+export const ButtonArea = styled.div`
+    margin-top: 32px;
+    width: 80px;
+    align-self: center;
+`;

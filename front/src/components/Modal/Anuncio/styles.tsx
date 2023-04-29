@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ITopicTextProps {
+    capitalize?: boolean;
+}
+
 export const Container = styled.div`
     background-color: var(--grey-blue);
     display: flex;
@@ -7,6 +11,13 @@ export const Container = styled.div`
     max-width: 800px;
     width: 800px;
     overflow: hidden;
+`;
+
+export const ConteinerLoader = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const LeftSide = styled.div`
@@ -71,10 +82,11 @@ export const Topic = styled.span`
     color: var(--dark-blue);
 `;
 
-export const TopicText = styled.span`
+export const TopicText = styled.span<ITopicTextProps>`
     font-size: 16px;
     font-weight: 400;
     color: var(--dark-blue);
+    text-transform: ${({ capitalize }) => (capitalize ? 'capitalize' : '')};
 `;
 
 export const ButtonArea = styled.div`

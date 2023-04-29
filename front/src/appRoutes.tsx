@@ -5,6 +5,7 @@ import { Layout } from './components/Layout';
 import { useAuth } from './context/auth';
 import { HomeLogado } from './pages/homeLogado';
 import { PageAnuncio } from './pages/anuncio';
+import { CriarAnuncio } from './pages/criarAnuncio';
 
 interface IProtectedRoutes {
     user: boolean;
@@ -32,6 +33,14 @@ function AppRoutes() {
                         element={
                             <ProtectedRoute user={signed}>
                                 <HomeLogado />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="anuncio"
+                        element={
+                            <ProtectedRoute user={signed}>
+                                <CriarAnuncio />
                             </ProtectedRoute>
                         }
                     />
