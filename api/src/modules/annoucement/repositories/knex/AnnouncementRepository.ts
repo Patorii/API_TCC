@@ -266,7 +266,7 @@ class AnnouncementRepository implements IAnnouncementRepository {
 
     async delete(cod_anuncio: number): Promise<void> {
         try {
-            fs.rmdir(
+            fs.rm(
                 `./tmp/anuncio/${cod_anuncio}`,
                 {
                     recursive: true,

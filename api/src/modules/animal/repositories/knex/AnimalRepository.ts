@@ -51,7 +51,7 @@ class AnimalRepository implements IAnimalRepository {
                 .first();
 
             if (announcement) {
-                fs.rmdir(
+                fs.rm(
                     `./tmp/anuncio/${announcement.cod_anuncio}`,
                     {
                         recursive: true,
