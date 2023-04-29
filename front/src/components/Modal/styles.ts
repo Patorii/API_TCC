@@ -8,6 +8,9 @@ export const Container = styled.div`
     gap: 8px;
     background-color: var(--grey-blue);
     border-radius: 10px;
+    @media (max-width: 820px) {
+        padding: 24px 8px;
+    }
 `;
 export const Xdiv = styled.div`
     position: absolute;

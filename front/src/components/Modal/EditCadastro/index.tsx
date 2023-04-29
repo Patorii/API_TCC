@@ -20,6 +20,7 @@ import { Radio } from '../../Radio/Index';
 import { RadioTitle, RadiosDiv } from '../../CreateAnnouncement/styles';
 import { useAuth } from '../../../context/auth';
 import apiPets, { IUser } from '../../../services/apiPets';
+import { toast } from 'react-toastify';
 
 interface IProps {
     closeFunction: () => void;
@@ -81,9 +82,11 @@ function EditCadastro({ closeFunction, openEditSenha }: IProps) {
 
             setLoading(false);
             closeFunction();
+            toast.success('Usuário alterado com sucesso!');
         } catch (err: any) {
             setLoading(false);
             setRetorno(err.response.data);
+            toast.error(err.response.data);
         }
     };
 

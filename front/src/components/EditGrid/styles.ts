@@ -14,6 +14,18 @@ export const GridArea = styled.div`
     grid-template-rows: 340px 340px;
     grid-auto-flow: row;
     grid-gap: 40px;
+    @media (max-width: 1745px) {
+        grid-template-columns: repeat(4, 250px);
+    }
+    @media (max-width: 1440px) {
+        grid-template-columns: repeat(3, 250px);
+    }
+    @media (max-width: 1120px) {
+        grid-template-columns: repeat(2, 250px);
+    }
+    @media (max-width: 860px) {
+        grid-template-columns: repeat(1, 250px);
+    }
 `;
 
 export const Card = styled.div`

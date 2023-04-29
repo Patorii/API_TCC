@@ -2,11 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 500px;
-
     background-color: var(--grey-blue);
     display: flex;
     flex-direction: column;
     gap: 12px;
+    @media (max-width: 520px) {
+        overflow-y: scroll;
+        width: 100%;
+        padding: 0px 8px;
+    }
 `;
 
 export const Form = styled.form`
@@ -21,7 +25,7 @@ export const InputArea = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    min-width: 260px;
+    min-width: 150px;
 `;
 
 export const LoginBtnArea = styled.div`
@@ -47,6 +51,9 @@ export const RadiosArea = styled.div`
     align-items: center;
     gap: 8px;
     height: 42px;
+    @media (max-width: 380px) {
+        margin-bottom: 16px;
+    }
 `;
 
 export const RadioTitle = styled.p`

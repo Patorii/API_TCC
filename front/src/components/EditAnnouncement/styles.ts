@@ -41,6 +41,10 @@ export const RadiosArea = styled.div`
     align-items: center;
     gap: 8px;
     height: 42px;
+    @media (max-width: 820px) {
+        width: 100%;
+        margin-bottom: 16px;
+    }
 `;
 
 export const RadioTitle = styled.p`
@@ -59,6 +63,9 @@ export const InputArea = styled.div<IInputAreaProps>`
     gap: 8px;
     width: ${({ width }) => (width ? width : '45%')};
     min-width: ${({ minWidth }) => (minWidth ? minWidth : '150px')};
+    @media (max-width: 820px) {
+        width: 100%;
+    }
 `;
 
 export const TexAreaDiv = styled.div`

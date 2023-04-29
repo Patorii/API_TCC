@@ -23,6 +23,7 @@ import { FileInputGroup } from '../Form/FileInputGroup';
 import { Button } from '../Button';
 import apiPets, { IAnimal, ICriaAnuncio } from '../../services/apiPets';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function CreateAnnouncement() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -128,8 +129,11 @@ function CreateAnnouncement() {
                     },
                 }
             );
-            setLoading(false);
-            navigate('/meusanuncios');
+            setTimeout(() => {
+                setLoading(false);
+                navigate('/meusanuncios');
+                toast.success('Anuncio criado com sucesso!');
+            }, 500);
         } catch (err) {
             setLoading(false);
             console.log(err);

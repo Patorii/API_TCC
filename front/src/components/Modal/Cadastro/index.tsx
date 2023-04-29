@@ -20,6 +20,7 @@ import { Radio } from '../../Radio/Index';
 import { RadioTitle, RadiosDiv } from '../../CreateAnnouncement/styles';
 import { useAuth } from '../../../context/auth';
 import apiPets from '../../../services/apiPets';
+import { toast } from 'react-toastify';
 
 interface IProps {
     closeFunction: () => void;
@@ -100,6 +101,7 @@ function Cadastro({ closeFunction }: IProps) {
                 }
                 setLoading(false);
                 closeFunction();
+                toast.success('Usuário cadastrado com sucesso!');
             }
         } catch (err: any) {
             setLoading(false);

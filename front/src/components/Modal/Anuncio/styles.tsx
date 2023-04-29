@@ -9,8 +9,15 @@ export const Container = styled.div`
     display: flex;
     gap: 12px;
     max-width: 800px;
-    width: 800px;
+    width: 100%;
     overflow: hidden;
+    @media (max-width: 820px) {
+        height: 600px;
+        overflow-y: scroll;
+        width: 100%;
+        flex-direction: column;
+        padding: 0px 8px;
+    }
 `;
 
 export const ConteinerLoader = styled.div`
@@ -26,12 +33,18 @@ export const LeftSide = styled.div`
     align-items: center;
     gap: 16px;
     width: 100%;
+    @media (max-width: 820px) {
+        flex-direction: column-reverse;
+    }
 `;
 
 export const Image = styled.img`
     width: 100%;
     height: 350px;
     border-radius: 10px;
+    @media (max-width: 400px) {
+        height: 250px;
+    }
 `;
 
 export const PetName = styled.p`

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { ButtonsArea, ButtonsAreaSigned, Container, IconArea } from './styles';
+import {
+    ButtonsArea,
+    ButtonsAreaSigned,
+    Container,
+    HamburguerIconArea,
+    IconArea,
+} from './styles';
 import { GiDogHouse } from 'react-icons/gi';
 import { Button } from '../Button';
 import { ModalPopUp } from '../Modal';
@@ -9,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { Cadastro } from '../Modal/Cadastro';
 import { EditCadastro } from '../Modal/EditCadastro';
 import { EditSenha } from '../Modal/EditSenha';
+import { List } from 'phosphor-react';
 
 export function Header() {
     const navigate = useNavigate();
@@ -17,6 +24,7 @@ export function Header() {
     const [toggleRegister, setToggleRegister] = useState(false);
     const [toggleEditUser, setToggleUser] = useState(false);
     const [toggleEditSenha, setToggleSenha] = useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false);
 
     function openModal() {
         setToggle(true);
@@ -45,46 +53,53 @@ export function Header() {
     }
     return (
         <>
-            <Container>
-                <IconArea onClick={() => navigate('/')}>
+            <Container open={toggleMenu}>
+                <IconArea onClick={() => navigate('')}>
                     <GiDogHouse size={48} color="var(--white)" />
                 </IconArea>
                 {signed ? (
-                    <ButtonsAreaSigned>
-                        <ButtonsArea width="155px">
-                            <Button
-                                caption="Criar anúncio"
-                                buttonType="secondary"
-                                onClick={() => navigate('/anuncio')}
-                            />
-                        </ButtonsArea>
-                        <ButtonsArea width="170px">
-                            <Button
-                                caption="Meus anúncios"
-                                buttonType="secondary"
-                                onClick={() => navigate('meusanuncios')}
-                            />
-                        </ButtonsArea>
-                        <ButtonsArea width="159px">
-                            <Button
-                                caption="Editar usuário"
-                                buttonType="secondary"
-                                onClick={() => openEditUser()}
-                            />
-                        </ButtonsArea>
-                        <ButtonsArea width="60px">
-                            <Button
-                                caption="Sair"
-                                buttonType="secondary"
-                                onClick={() => {
-                                    SignOut();
-                                    navigate('/');
-                                }}
-                            />
-                        </ButtonsArea>
-                    </ButtonsAreaSigned>
+                    <>
+                        <HamburguerIconArea
+                            onClick={() => setToggleMenu(!toggleMenu)}
+                        >
+                            <List color="var(--white)" size={48} />
+                        </HamburguerIconArea>
+                        <ButtonsAreaSigned>
+                            <ButtonsArea signed={signed} width="155px">
+                                <Button
+                                    caption="Criar anúncio"
+                                    buttonType="secondary"
+                                    onClick={() => navigate('/anuncio')}
+                                />
+                            </ButtonsArea>
+                            <ButtonsArea signed={signed} width="170px">
+                                <Button
+                                    caption="Meus anúncios"
+                                    buttonType="secondary"
+                                    onClick={() => navigate('meusanuncios')}
+                                />
+                            </ButtonsArea>
+                            <ButtonsArea signed={signed} width="159px">
+                                <Button
+                                    caption="Editar usuário"
+                                    buttonType="secondary"
+                                    onClick={() => openEditUser()}
+                                />
+                            </ButtonsArea>
+                            <ButtonsArea signed={signed} width="60px">
+                                <Button
+                                    caption="Sair"
+                                    buttonType="secondary"
+                                    onClick={() => {
+                                        SignOut();
+                                        navigate('/');
+                                    }}
+                                />
+                            </ButtonsArea>
+                        </ButtonsAreaSigned>
+                    </>
                 ) : (
-                    <ButtonsArea>
+                    <ButtonsArea signed={signed}>
                         <Button
                             caption="Entrar"
                             buttonType="secondary"

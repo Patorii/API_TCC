@@ -1,25 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Container,
-    ErrorText,
-    Form,
-    InputArea,
-    LoginBtnArea,
-    RadiosArea,
-    RegisterBtnArea,
-} from './styles';
+import React, { useState } from 'react';
+import { Container, ErrorText, Form, InputArea, LoginBtnArea } from './styles';
 import { Text } from '../../Text';
 import { TextInputGroup } from '../../Form/TextInputGroup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../Button';
-
-import { useNavigate } from 'react-router-dom';
-import { Radio } from '../../Radio/Index';
-import { RadioTitle, RadiosDiv } from '../../CreateAnnouncement/styles';
 import { useAuth } from '../../../context/auth';
 import apiPets, { IUser } from '../../../services/apiPets';
+import { toast } from 'react-toastify';
 
 interface IProps {
     closeFunction: () => void;
@@ -68,6 +57,7 @@ function EditSenha({ closeFunction }: IProps) {
             });
             setLoading(false);
             closeFunction();
+            toast.success('Senha alterada com sucesso!');
         } catch (err: any) {
             setLoading(false);
             setRetorno(err.response.data);

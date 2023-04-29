@@ -2,11 +2,15 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 500px;
-
     background-color: var(--grey-blue);
     display: flex;
     flex-direction: column;
     gap: 12px;
+    @media (max-width: 520px) {
+        overflow-y: scroll;
+        width: 100%;
+        padding: 0px 8px;
+    }
 `;
 
 export const Form = styled.form`
@@ -19,7 +23,7 @@ export const Form = styled.form`
 
 export const InputArea = styled.div`
     width: 100%;
-    min-width: 260px;
+    min-width: 150px;
 `;
 
 export const LoginBtnArea = styled.div`

@@ -16,6 +16,7 @@ import { Button } from '../../Button';
 import { useAuth } from '../../../context/auth';
 import { useNavigate } from 'react-router-dom';
 import { ModalPopUp } from '..';
+import { toast } from 'react-toastify';
 
 interface IProps {
     closeFunction: () => void;
@@ -65,10 +66,12 @@ function Login({ closeFunction, openRegisterModal }: IProps) {
             }
             setLoading(false);
             closeFunction();
+            toast.success('Conectado com sucesso!');
         } catch (err: any) {
             setValue('password', '');
             setLoading(false);
             setRetorno(err.message || err);
+            toast.error(err.message || err);
         }
     };
     return (

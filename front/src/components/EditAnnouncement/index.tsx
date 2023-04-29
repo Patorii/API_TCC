@@ -22,6 +22,7 @@ import { TextAreaGroup } from '../Form/TextAreaGroup';
 import { Button } from '../Button';
 import apiPets, { IAnimal, IAnunciosData } from '../../services/apiPets';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface IProps {
     codAnuncio: number;
@@ -38,7 +39,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
         const resp = await apiPets
             .get(`/announcements/${codAnuncio}`)
             .then((resp) => resp.data);
-        setAnuncioData({ ...resp, raca: resp.raca.toLowerCase() });
+        setAnuncioData(resp);
         setLoading(false);
     }
 
@@ -92,9 +93,9 @@ function EditAnnouncement({ codAnuncio }: IProps) {
             .number()
             .typeError('Apenas números')
             .required('O número deve ser informado'),
-        complemento: yup.string(),
+        complemento: yup.string().nullable(),
         tel: yup.string().required('Ao menos um telefone deve ser informado'),
-        tel2: yup.string(),
+        tel2: yup.string().nullable(),
     });
 
     const {
@@ -113,8 +114,9 @@ function EditAnnouncement({ codAnuncio }: IProps) {
 
     const onSubmit: SubmitHandler<AnnouncementFormFields> = async (data) => {
         try {
+            setLoading(true);
             const animal: IAnimal = await apiPets
-                .patch(`/animal${anuncioData.cod_animal}`, {
+                .patch(`/animal/${anuncioData.cod_animal}`, {
                     especie: data.especie,
                     nome: data.animal,
                     idade: data.idade,
@@ -125,7 +127,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                 .then((resp) => resp.data);
 
             await apiPets
-                .patch(`/announcements/${anuncioData}`, {
+                .patch(`/announcements/${codAnuncio}`, {
                     cod_animal: animal.cod_animal,
                     tipo: data.tipo,
                     descricao: data.descricao,
@@ -140,8 +142,12 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                     tel2: data.tel2,
                 })
                 .then((resp) => resp.data);
+            navigate('/meusanuncios');
+            toast.success('Anuncio alterado com sucesso!');
+            setLoading(false);
         } catch (err) {
             console.log(err);
+            setLoading(false);
         }
     };
 

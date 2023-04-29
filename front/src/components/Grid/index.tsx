@@ -47,6 +47,7 @@ function Grid({ anuncios }: IProps) {
                                 >
                                     <CardImage
                                         src={`data:image/jpeg;base64,${anuncio.foto_principal.foto}`}
+                                        title={`animal${anuncio.cod_anuncio}`}
                                     />
                                     <CardTitle>{anuncio.nome_animal}</CardTitle>
                                     <CardAddressArea>
