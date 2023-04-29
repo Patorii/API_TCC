@@ -28,12 +28,12 @@ function converteCorFundo(corEscolhida: string | undefined) {
 }
 function converteCorEscrita(corEscolhida: string | undefined) {
     if (corEscolhida === 'secondary') {
-        return 'var(--black)';
+        return 'var(--dark-blue)';
     }
     if (corEscolhida === 'tertiary') {
         return 'var(--grey-blue)';
     } else {
-        return 'var(--black)';
+        return 'var(--dark-blue)';
     }
 }
 

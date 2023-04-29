@@ -6,7 +6,7 @@ import {
     ToggleArrowArea,
     Wrapper,
 } from './styles';
-import { Filter } from '../Filter/Index';
+import { Filter } from '../Filter';
 import { IoArrowBack } from 'react-icons/io5';
 
 interface IProps {

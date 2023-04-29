@@ -6,17 +6,26 @@ import { ModalPopUp } from '../Modal';
 import { Login } from '../Modal/Login';
 import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
+import { Cadastro } from '../Modal/Cadastro';
 
 export function Header() {
     const navigate = useNavigate();
     const { signed, SignOut } = useAuth();
     const [toggle, setToggle] = useState(false);
+    const [toggleRegister, setToggleRegister] = useState(false);
 
     function openModal() {
         setToggle(true);
     }
     function closeModal() {
         setToggle(false);
+    }
+    function openRegisterModal() {
+        closeModal();
+        setToggleRegister(true);
+    }
+    function closeRegisterModal() {
+        setToggleRegister(false);
     }
     return (
         <>
@@ -71,7 +80,16 @@ export function Header() {
                 )}
             </Container>
             <ModalPopUp isOpen={toggle} closeFunction={closeModal}>
-                <Login closeFunction={closeModal} />
+                <Login
+                    closeFunction={closeModal}
+                    openRegisterModal={openRegisterModal}
+                />
+            </ModalPopUp>
+            <ModalPopUp
+                isOpen={toggleRegister}
+                closeFunction={closeRegisterModal}
+            >
+                <Cadastro closeFunction={closeRegisterModal} />
             </ModalPopUp>
         </>
     );

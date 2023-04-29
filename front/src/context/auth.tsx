@@ -56,6 +56,8 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         const refreshToken = localStorage.getItem('apeti:RefreshToken');
         const token = localStorage.getItem('apeti:Token');
         const user = localStorage.getItem('apeti:User');
+        apiPets.defaults.headers.Authorization = `Bearer ${token}`;
+
         if (user && token && refreshToken) {
             setUser(JSON.parse(user));
             setToken(token);

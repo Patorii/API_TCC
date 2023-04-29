@@ -5,9 +5,10 @@ interface IProps {
     label: string;
     value: string;
     register: any;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function Radio({ name, label, value, register }: IProps) {
+function Radio({ name, label, value, register, onChange }: IProps) {
     return (
         <div className="form-check">
             <input
@@ -15,8 +16,8 @@ function Radio({ name, label, value, register }: IProps) {
                 type="radio"
                 value={value}
                 {...register(name)}
-                id="flexCheckIndeterminate"
                 name={name}
+                onChange={onChange}
             />
             <label className="form-check-label" htmlFor={name}>
                 {label}

@@ -15,15 +15,27 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../Button';
 import { useAuth } from '../../../context/auth';
 import { useNavigate } from 'react-router-dom';
+import { ModalPopUp } from '..';
 
 interface IProps {
     closeFunction: () => void;
+    openRegisterModal: () => void;
 }
-function Login({ closeFunction }: IProps) {
+function Login({ closeFunction, openRegisterModal }: IProps) {
+    const [toggle, setToggle] = useState(false);
+
     const navigate = useNavigate();
     const { Signin } = useAuth();
     const [loading, setLoading] = useState(false);
     const [retorno, setRetorno] = useState('');
+
+    function openModal() {
+        setToggle(true);
+    }
+    function closeModal() {
+        setToggle(false);
+    }
+
     type LoginFormFields = {
         email: string;
         password: string;
@@ -60,42 +72,48 @@ function Login({ closeFunction }: IProps) {
         }
     };
     return (
-        <Container onSubmit={handleSubmit(onSubmit)}>
-            <Text size="large">Entre com sua conta</Text>
-            <Form>
-                <InputArea>
-                    <TextInputGroup
-                        name="email"
-                        label="E-mail"
-                        register={register}
-                        errors={errors.email}
-                        type="email"
-                    />
-                </InputArea>
-                <InputArea>
-                    <TextInputGroup
-                        name="password"
-                        label="Senha"
-                        register={register}
-                        errors={errors.password}
-                        type="password"
-                    />
-                </InputArea>
-                <ErrorText>{retorno}</ErrorText>
-                <LoginBtnArea>
-                    <Button
-                        caption="Entrar"
-                        buttonType="primary"
-                        buttonKind="submit"
-                        loading={loading}
-                    />
-                </LoginBtnArea>
-                <Text size="medium">Não possui conta?</Text>
-                <RegisterBtnArea>
-                    <Button caption="Cadastrar-se" buttonType="secondary" />
-                </RegisterBtnArea>
-            </Form>
-        </Container>
+        <>
+            <Container onSubmit={handleSubmit(onSubmit)}>
+                <Text size="large">Entre com sua conta</Text>
+                <Form>
+                    <InputArea>
+                        <TextInputGroup
+                            name="email"
+                            label="E-mail"
+                            register={register}
+                            errors={errors.email}
+                            type="email"
+                        />
+                    </InputArea>
+                    <InputArea>
+                        <TextInputGroup
+                            name="password"
+                            label="Senha"
+                            register={register}
+                            errors={errors.password}
+                            type="password"
+                        />
+                    </InputArea>
+                    <ErrorText>{retorno}</ErrorText>
+                    <LoginBtnArea>
+                        <Button
+                            caption="Entrar"
+                            buttonType="primary"
+                            buttonKind="submit"
+                            loading={loading}
+                        />
+                    </LoginBtnArea>
+                    <Text size="medium">Não possui conta?</Text>
+                    <RegisterBtnArea>
+                        <Button
+                            caption="Cadastrar-se"
+                            buttonType="secondary"
+                            onClick={() => openRegisterModal()}
+                        />
+                    </RegisterBtnArea>
+                </Form>
+            </Container>
+        </>
     );
 }
 

@@ -33,7 +33,6 @@ function SelectInput({
     return (
         <Container isInvalid={isInvalid} isValid={isValid}>
             <Select
-                id="SelectInput"
                 name={name}
                 defaultValue={value || -1}
                 {...register(name)}

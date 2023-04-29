@@ -26,6 +26,13 @@ export const InputLine = styled.div`
     gap: 12px;
     flex-wrap: wrap;
 `;
+export const InputColumn = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+`;
 
 export const RadiosArea = styled.div`
     width: 40%;
@@ -53,3 +60,11 @@ export const InputArea = styled.div<IInputAreaProps>`
     width: ${({ width }) => (width ? width : '45%')};
     min-width: ${({ minWidth }) => (minWidth ? minWidth : '150px')};
 `;
+
+export const TexAreaDiv = styled.div`
+    width: 100%;
+    height: 120px;
+    margin-bottom: 24px;
+`;
+
+export const SubmitBtnArea = styled.div``;
