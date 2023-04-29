@@ -6,6 +6,7 @@ interface IButtonProps {
 
 interface IHamburguerMenu {
     open: boolean;
+    signed: boolean;
 }
 export const Container = styled.header<IHamburguerMenu>`
     display: flex;
@@ -19,7 +20,7 @@ export const Container = styled.header<IHamburguerMenu>`
     overflow: hidden;
     transition: 1s height;
     @media (max-width: 720px) {
-        height: ${({ open }) => (open ? '324px' : '80px')};
+        height: ${({ open, signed }) => signed && (open ? '324px' : '80px')};
         align-items: flex-start;
     }
 `;

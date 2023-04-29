@@ -53,7 +53,7 @@ export function Header() {
     }
     return (
         <>
-            <Container open={toggleMenu}>
+            <Container signed={signed} open={toggleMenu}>
                 <IconArea onClick={() => navigate('')}>
                     <GiDogHouse size={48} color="var(--white)" />
                 </IconArea>
