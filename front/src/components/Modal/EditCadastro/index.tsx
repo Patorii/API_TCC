@@ -14,8 +14,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../Button';
-
-import { useNavigate } from 'react-router-dom';
 import { Radio } from '../../Radio/Index';
 import { RadioTitle, RadiosDiv } from '../../CreateAnnouncement/styles';
 import { useAuth } from '../../../context/auth';

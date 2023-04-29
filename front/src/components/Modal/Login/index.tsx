@@ -15,7 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../Button';
 import { useAuth } from '../../../context/auth';
 import { useNavigate } from 'react-router-dom';
-import { ModalPopUp } from '..';
+
 import { toast } from 'react-toastify';
 
 interface IProps {
@@ -23,19 +23,10 @@ interface IProps {
     openRegisterModal: () => void;
 }
 function Login({ closeFunction, openRegisterModal }: IProps) {
-    const [toggle, setToggle] = useState(false);
-
     const navigate = useNavigate();
     const { Signin } = useAuth();
     const [loading, setLoading] = useState(false);
     const [retorno, setRetorno] = useState('');
-
-    function openModal() {
-        setToggle(true);
-    }
-    function closeModal() {
-        setToggle(false);
-    }
 
     type LoginFormFields = {
         email: string;

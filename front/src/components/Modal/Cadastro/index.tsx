@@ -6,7 +6,6 @@ import {
     InputArea,
     LoginBtnArea,
     RadiosArea,
-    RegisterBtnArea,
 } from './styles';
 import { Text } from '../../Text';
 import { TextInputGroup } from '../../Form/TextInputGroup';

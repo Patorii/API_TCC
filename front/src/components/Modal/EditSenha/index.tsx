@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '../../Button';
 import { useAuth } from '../../../context/auth';
-import apiPets, { IUser } from '../../../services/apiPets';
+import apiPets from '../../../services/apiPets';
 import { toast } from 'react-toastify';
 
 interface IProps {
