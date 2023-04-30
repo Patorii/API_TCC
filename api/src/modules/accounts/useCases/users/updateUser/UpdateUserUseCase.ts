@@ -6,8 +6,8 @@ import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
     nome: string;
-    cpf: number;
-    cnpj: number;
+    cpf: string;
+    cnpj: string;
     email: string;
     cod_usuario: number;
     cod_usuario_atual: number;
