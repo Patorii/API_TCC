@@ -65,6 +65,15 @@ export function Header() {
                             <List color="var(--white)" size={48} />
                         </HamburguerIconArea>
                         <ButtonsAreaSigned>
+                            <ButtonsArea signed={signed} width="80px">
+                                <Button
+                                    caption="Inicio"
+                                    buttonType="secondary"
+                                    onClick={() => {
+                                        navigate('/');
+                                    }}
+                                />
+                            </ButtonsArea>
                             <ButtonsArea signed={signed} width="155px">
                                 <Button
                                     caption="Criar anúncio"
