@@ -2,7 +2,7 @@
     "name": "api",
     "version": "1.0.0",
     "main": "index.js",
-    "author": "Patrick",
+    "author": "Patrick Rossetto Ribeiro",
     "scripts": {
         "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --inspect --transpile-only --ignore-watch node_modules --respawn --poll src/shared/http/server.ts",
         "production": "pm2 start dist/src/shared/http/server.js --name api-autoserv",
