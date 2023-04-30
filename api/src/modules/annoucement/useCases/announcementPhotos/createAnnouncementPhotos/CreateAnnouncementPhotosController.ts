@@ -1,3 +1,4 @@
+import { deleteFile } from "@utils/file";
 import { Response, Request } from "express";
 import { container } from "tsyringe";
 
@@ -21,10 +22,26 @@ class CreateAnnouncementPhotosController {
         const { codanuncio } = request.params;
         const cod_anuncio = Number(codanuncio);
         // eslint-disable-next-line prettier/prettier, dot-notation
-        const file:IFile = request.files['foto'][0]
+        const file: IFile = request.files["foto"][0];
         const fileName = file.filename.substring(0, file.filename.indexOf("."));
         const fileExtension = file.filename.split(".")[1];
-
+        if (
+            fileExtension !== "jpeg" &&
+            fileExtension !== "JPEG" &&
+            fileExtension !== "JPG" &&
+            fileExtension !== "jpg" &&
+            fileExtension !== "webp" &&
+            fileExtension !== "WEBP" &&
+            fileExtension !== "png" &&
+            fileExtension !== "PNG"
+        ) {
+            deleteFile(
+                `./tmp/anuncio/${cod_anuncio}/images/${fileName}.${fileExtension}`
+            );
+            throw new AppError(
+                "Formato de imagem inválido, é aceito apenas, PNG, JPG ou WEBP"
+            );
+        }
         let { capa } = request.body;
         if (capa) {
             capa = capa.toUpperCase();

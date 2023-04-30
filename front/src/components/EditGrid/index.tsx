@@ -69,7 +69,7 @@ function EditGrid({ anuncios }: IProps) {
                                         caption="Apagar"
                                         onClick={() =>
                                             deleteAnnouncement(
-                                                anuncio.cod_usuario
+                                                anuncio.cod_animal
                                             )
                                         }
                                     />

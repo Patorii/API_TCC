@@ -33,6 +33,9 @@ function MeusAnuncios() {
     useEffect(() => {
         getAnuncios(filterOptions);
     }, [filterOptions, refreshMainGet]);
+    useEffect(() => {
+        console.log(anuncios.data);
+    }, [anuncios]);
 
     return (
         <Main>

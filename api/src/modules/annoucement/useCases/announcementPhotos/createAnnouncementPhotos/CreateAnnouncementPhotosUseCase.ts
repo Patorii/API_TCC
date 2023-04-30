@@ -1,6 +1,7 @@
 import { AnnouncementPhotos } from "@modules/annoucement/entities/AnnouncementPhotos";
 import { IAnnouncementPhotosRepository } from "@modules/annoucement/repositories/IAnnouncementPhotosRepository";
 import { IAnnouncementRepository } from "@modules/annoucement/repositories/IAnnouncementRepository";
+import { deleteFile } from "@utils/file";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
@@ -55,6 +56,7 @@ class CreateAnnouncementPhotosUseCase {
         );
 
         if (!announcement) {
+            deleteFile(arquivo);
             throw new AppError(
                 "O código de anuncio informado não foi localizado na lista."
             );
