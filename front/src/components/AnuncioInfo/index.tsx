@@ -94,7 +94,9 @@ function AnuncioInfo({ codAnuncio }: IProps) {
                             </TopicArea>
                             <TopicArea>
                                 <Topic>Sexo:</Topic>
-                                <TopicText>{anuncio.sexo}</TopicText>
+                                <TopicText>
+                                    {anuncio.sexo === 'F' ? 'Fêmea' : 'Macho'}
+                                </TopicText>
                             </TopicArea>
                         </PetInformation>
                         <PetInformation>

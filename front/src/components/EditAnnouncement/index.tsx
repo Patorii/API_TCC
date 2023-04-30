@@ -74,17 +74,27 @@ function EditAnnouncement({ codAnuncio }: IProps) {
     };
 
     const schema = yup.object().shape({
-        animal: yup.string().required('O nome do animal deve ser informado'),
+        animal: yup
+            .string()
+            .max(30, 'Deve conter no maxímo 30 caracteres')
+            .required('O nome do animal deve ser informado'),
         especie: yup.string().required('A espécie deve ser informado'),
         sexo: yup.string(),
-        idade: yup.string().required('A idade deve ser informada'),
+        idade: yup
+            .string()
+            .max(10, 'Deve conter no maxímo 10 caracteres')
+            .required('A idade deve ser informada'),
         raca: yup.string().required('A raça deve ser informada'),
         cor: yup.string().required('A cor do animal deve ser informada'),
         tipo: yup.string(),
         descricao: yup
             .string()
+            .max(500, 'Deve conter no maxímo 500 caracteres')
             .required('A descrição do anúncio deve ser informada'),
-        cep: yup.string().required('O CEP deve ser informado'),
+        cep: yup
+            .string()
+            .max(8, 'Deve conter no maxímo 8 digitos')
+            .required('O CEP deve ser informado'),
         uf: yup.string(),
         cidade: yup.string().required('A cidade deve ser informada'),
         bairro: yup.string().required('O bairro deve ser informado'),
@@ -94,8 +104,14 @@ function EditAnnouncement({ codAnuncio }: IProps) {
             .typeError('Apenas números')
             .required('O número deve ser informado'),
         complemento: yup.string().nullable(),
-        tel: yup.string().required('Ao menos um telefone deve ser informado'),
-        tel2: yup.string().nullable(),
+        tel: yup
+            .string()
+            .max(11, 'Deve conter no maxímo 11 digitos')
+            .required('Ao menos um telefone deve ser informado'),
+        tel2: yup
+            .string()
+            .max(11, 'Deve conter no maxímo 11 digitos')
+            .nullable(),
     });
 
     const {
@@ -146,7 +162,6 @@ function EditAnnouncement({ codAnuncio }: IProps) {
             toast.success('Anuncio alterado com sucesso!');
             setLoading(false);
         } catch (err) {
-            console.log(err);
             setLoading(false);
         }
     };
@@ -199,7 +214,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                                 name="sexo"
                                 register={register}
                                 value="F"
-                                label="Femea"
+                                label="Fêmea"
                             />
                             <Radio
                                 name="sexo"

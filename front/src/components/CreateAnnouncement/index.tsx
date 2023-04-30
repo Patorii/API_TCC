@@ -51,17 +51,27 @@ function CreateAnnouncement() {
     };
 
     const schema = yup.object().shape({
-        animal: yup.string().required('O nome do animal deve ser informado'),
+        animal: yup
+            .string()
+            .max(30, 'Deve conter no maxímo 30 caracteres')
+            .required('O nome do animal deve ser informado'),
         especie: yup.string().required('A espécie deve ser informado'),
         sexo: yup.string(),
-        idade: yup.string().required('A idade deve ser informada'),
+        idade: yup
+            .string()
+            .max(10, 'Deve conter no maxímo 10 caracteres')
+            .required('A idade deve ser informada'),
         raca: yup.string().required('A raça deve ser informada'),
         cor: yup.string().required('A cor do animal deve ser informada'),
         tipo: yup.string(),
         descricao: yup
             .string()
+            .max(500, 'Deve conter no maxímo 500 caracteres')
             .required('A descrição do anúncio deve ser informada'),
-        cep: yup.string().required('O CEP deve ser informado'),
+        cep: yup
+            .string()
+            .max(8, 'Deve conter no maxímo 8 digitos')
+            .required('O CEP deve ser informado'),
         uf: yup.string(),
         cidade: yup.string().required('A cidade deve ser informada'),
         bairro: yup.string().required('O bairro deve ser informado'),
@@ -70,10 +80,15 @@ function CreateAnnouncement() {
             .number()
             .typeError('Apenas números')
             .required('O número deve ser informado'),
-        complemento: yup.string(),
-        tel: yup.string().required('Ao menos um telefone deve ser informado'),
-        tel2: yup.string(),
-        foto: yup.mixed().required('Uma foto deve ser adicionada'),
+        complemento: yup.string().nullable(),
+        tel: yup
+            .string()
+            .max(11, 'Deve conter no maxímo 11 digitos')
+            .required('Ao menos um telefone deve ser informado'),
+        tel2: yup
+            .string()
+            .max(11, 'Deve conter no maxímo 11 digitos')
+            .nullable(),
     });
 
     const {
@@ -90,6 +105,8 @@ function CreateAnnouncement() {
     });
 
     const onSubmit: SubmitHandler<AnnouncementFormFields> = async (data) => {
+        let codAnimal = 0;
+
         try {
             setLoading(true);
             const animal: IAnimal = await apiPets
@@ -102,7 +119,7 @@ function CreateAnnouncement() {
                     sexo: data.sexo,
                 })
                 .then((resp) => resp.data);
-
+            codAnimal = animal.cod_animal;
             const anuncio: ICriaAnuncio = await apiPets
                 .post('/announcements', {
                     cod_animal: animal.cod_animal,
@@ -120,7 +137,7 @@ function CreateAnnouncement() {
                 })
                 .then((resp) => resp.data);
 
-            apiPets.post(
+            await apiPets.post(
                 `/announcements/${anuncio.cod_anuncio}/photos`,
                 { foto: data.foto[0] },
                 {
@@ -129,14 +146,19 @@ function CreateAnnouncement() {
                     },
                 }
             );
+
             setTimeout(() => {
                 setLoading(false);
                 navigate('/meusanuncios');
                 toast.success('Anuncio criado com sucesso!');
             }, 500);
-        } catch (err) {
+        } catch (err: any) {
             setLoading(false);
-            console.log(err);
+            await apiPets.delete(`/animal/${codAnimal}`);
+            toast.error(
+                (err.response.data || err.message || err) +
+                    '. Corrija os campos e tente novamente!'
+            );
         }
     };
 
@@ -188,7 +210,7 @@ function CreateAnnouncement() {
                                 name="sexo"
                                 register={register}
                                 value="F"
-                                label="Femea"
+                                label="Fêmea"
                             />
                             <Radio
                                 name="sexo"

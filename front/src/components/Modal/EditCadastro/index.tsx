@@ -157,6 +157,7 @@ function EditCadastro({ closeFunction, openEditSenha }: IProps) {
                             register={register}
                             errors={errors.doc}
                             placeholder="12345678910"
+                            maxLength={11}
                         />
                     </InputArea>
                 ) : (
@@ -167,6 +168,7 @@ function EditCadastro({ closeFunction, openEditSenha }: IProps) {
                             register={register}
                             errors={errors.doc}
                             placeholder="12345678912345"
+                            maxLength={14}
                         />
                     </InputArea>
                 )}
