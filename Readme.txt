@@ -2,7 +2,7 @@ Como subir a aplicação?
 
 Necessário ter instalado: VSCODE, MariaDB, NODE.js
 
-Pode ser utilizado: DBFOrGE para ver o banco de dados; Insomnia para testar as rotas da API.
+Pode ser utilizado: DBForge para ver o banco de dados; Insomnia para testar as rotas da API.
 
 1 - Descompacte o .rar onde desejar.
 2 - Abra o console do MariaDB, (pesquisando por ele no menu iniciar do windows mesmo), crie o banco de dados digitando sem as aspas "create database tcc;" e de enter.
