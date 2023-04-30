@@ -5,7 +5,6 @@ import {
     ContactInformation,
     Container,
     Description,
-    Image,
     InformationArea,
     PetInformation,
     PetName,
@@ -14,12 +13,13 @@ import {
     TopicArea,
     TopicText,
 } from './styles';
-import apiPets, { IAnunciosData } from '../../services/apiPets';
+import apiPets, { IAnunciosData, IFoto } from '../../services/apiPets';
 import { telefonePattern } from '../../constants/telefoneNumber';
 import { Button } from '../Button';
 import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../Loading';
+import { Carousel } from '../Carousel';
 interface IProps {
     codAnuncio: number;
 }
@@ -28,18 +28,27 @@ function AnuncioInfo({ codAnuncio }: IProps) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
     const [anuncio, setAnuncio] = useState<IAnunciosData>({} as IAnunciosData);
+    const [fotos, setFotos] = useState<Array<IFoto>>([{} as IFoto]);
 
     async function getAnuncio(codAnuncio: number) {
-        setLoading(true);
         const resp = await apiPets
             .get(`/announcements/${codAnuncio}`)
             .then((resp) => resp.data);
         setAnuncio({ ...resp, raca: resp.raca.toLowerCase() });
-        setLoading(false);
+    }
+
+    async function getFotosAnuncio(codAnuncio: number) {
+        const resp = await apiPets
+            .get(`/announcements/${codAnuncio}/photos`)
+            .then((resp) => resp.data);
+        setFotos(resp);
     }
 
     useEffect(() => {
+        setLoading(true);
         getAnuncio(codAnuncio);
+        getFotosAnuncio(codAnuncio);
+        setLoading(false);
     }, []);
 
     return (
@@ -49,9 +58,8 @@ function AnuncioInfo({ codAnuncio }: IProps) {
             ) : (
                 <AnnouncementArea>
                     <PetName>{anuncio.nome_animal}</PetName>
-                    <Image
-                        src={`data:image/jpeg;base64,${anuncio.foto_principal?.foto}`}
-                    ></Image>
+
+                    <Carousel fotos={fotos} />
                     <Description>{anuncio.descricao}</Description>
                     <SeparatorTitle>Informações Gerais</SeparatorTitle>
                     <InformationArea>

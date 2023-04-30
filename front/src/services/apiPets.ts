@@ -92,3 +92,14 @@ export interface IUser {
     nome: string;
     email: string;
 }
+
+export interface IFoto {
+    cod_foto_anuncio?: number;
+    cod_anuncio: number;
+    extensao: string;
+    arquivo: string;
+    capa: 'N' | 'S';
+    foto: string;
+    created_at?: Date;
+    updated_at?: Date;
+}

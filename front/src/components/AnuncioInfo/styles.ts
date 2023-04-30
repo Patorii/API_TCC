@@ -19,13 +19,6 @@ export const AnnouncementArea = styled.div`
     gap: 12px;
 `;
 
-export const Image = styled.img`
-    width: 400px;
-    height: 350px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-`;
-
 export const PetName = styled.p`
     font-size: 36px;
     font-weight: 1000;
@@ -42,7 +35,6 @@ export const Description = styled.p`
 export const SeparatorTitle = styled.p`
     font-size: 18px;
     font-weight: 600;
-
     margin-bottom: -8px;
 `;
 export const InformationArea = styled.div`
@@ -50,24 +42,38 @@ export const InformationArea = styled.div`
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    @media (max-width: 800px) {
+        flex-direction: column;
+        justify-content: start;
+    }
 `;
 export const PetInformation = styled.div`
     width: 25%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 `;
 export const ContactInformation = styled.div`
     width: 50%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    @media (max-width: 800px) {
+        width: 100%;
+        gap: 8px;
+    }
 `;
 
 export const TopicArea = styled.div`
     width: auto;
     display: flex;
     gap: 4px;
+    @media (max-width: 360px) {
+        flex-direction: column;
+    }
 `;
 
 export const Topic = styled.span`
@@ -81,6 +87,11 @@ export const TopicText = styled.span<ITopicTextProps>`
     font-weight: 400;
     color: var(--dark-blue);
     text-transform: ${({ capitalize }) => (capitalize ? 'capitalize' : '')};
+    @media (max-width: 259px) {
+        width: 180px;
+        overflow-wrap: break-word;
+        word-wrap: break-all;
+    }
 `;
 
 export const ButtonArea = styled.div`
