@@ -630,7 +630,7 @@
                 }
             }
         },
-        "/announcement": {
+        "/announcements": {
             "post": {
                 "tags": ["Announcement"],
                 "summary": "Criar anuncio",
@@ -972,7 +972,7 @@
                 }
             }
         },
-        "/announcement/ofuser/{cod_usuario}": {
+        "/announcements/ofuser/{cod_usuario}": {
             "patch": {
                 "parameters": [
                     {
@@ -1206,7 +1206,7 @@
                 }
             }
         },
-        "/announcement/{cod_anuncio}": {
+        "/announcements/{cod_anuncio}": {
             "parameters": [
                 {
                     "name": "cod_anuncio",
@@ -1444,7 +1444,7 @@
                         }
                     },
                     "400": {
-                        "description": "O código de anuncio deve ser informado."
+                        "description": "O código de anuncio deve ser informado.<br />O código de anúncio informado, não foi localizado na lista."
                     }
                 }
             },
@@ -1467,7 +1467,7 @@
                 }
             }
         },
-        "/announcement/photos/{cod_foto_anuncio}": {
+        "/announcements/photos/{cod_foto_anuncio}": {
             "parameters": [
                 {
                     "name": "cod_foto_anuncio",
@@ -1542,7 +1542,7 @@
                 }
             }
         },
-        "/announcement/{cod_anuncio}/photos": {
+        "/announcements/{cod_anuncio}/photos": {
             "parameters": [
                 {
                     "name": "cod_anuncio",
@@ -1608,7 +1608,7 @@
                         }
                     },
                     "400": {
-                        "description": "O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista.<br />A opção de capa informada não é compativel deve ser informado: 'S' para sim ou 'N' para não."
+                        "description": "Formato de imagem inválido, é aceito apenas, PNG, JPG ou WEBP<br />O código de anuncio deve ser informado.<br />O código de anuncio informado não foi localizado na lista.<br />A opção de capa informada não é compativel deve ser informado: 'S' para sim ou 'N' para não."
                     },
                     "401": {
                         "description": "Não é possivel adicionar a fotos em um anuncio de outro usuário."
@@ -1666,7 +1666,7 @@
                 }
             }
         },
-        "/announcement/{cod_anuncio}/mainphoto": {
+        "/announcements/{cod_anuncio}/mainphoto": {
             "parameters": [
                 {
                     "name": "cod_anuncio",

@@ -57,6 +57,11 @@ class GetAnnouncementUseCase {
         const Announcement: IListData =
             await this.AnnouncementRepository.findById(cod_anuncio);
 
+        if (!Announcement) {
+            throw new AppError(
+                "O código de anúncio informado, não foi localizado na lista."
+            );
+        }
         const announcementBase64 =
             await this.announcementPhotosRepository.getMainPhotoBase64ByCod(
                 cod_anuncio
