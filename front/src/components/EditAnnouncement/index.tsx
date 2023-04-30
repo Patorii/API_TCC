@@ -290,6 +290,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                             register={register}
                             errors={errors.cep}
                             placeholder="Digite o CEP"
+                            maxLength={8}
                         />
                     </InputArea>
                 </InputLine>
@@ -350,6 +351,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                             register={register}
                             errors={errors.tel}
                             placeholder="1134567891"
+                            maxLength={11}
                         />
                     </InputArea>
                     <InputArea>
@@ -359,6 +361,7 @@ function EditAnnouncement({ codAnuncio }: IProps) {
                             register={register}
                             errors={errors.tel2}
                             placeholder="11987564321"
+                            maxLength={11}
                         />
                     </InputArea>
                 </InputLine>

@@ -18,7 +18,7 @@ interface IFilterOptions {
 function MeusAnuncios() {
     const { user } = useAuth();
     const [anuncios, setAnuncios] = useState<IAnuncios>({} as IAnuncios);
-    const { filterOptions, refreshMainGet } = useMain();
+    const { filterOptions, setFilter, refreshMainGet } = useMain();
     const [loading, setLoading] = useState<boolean>(false);
 
     async function getAnuncios(data: IFilterOptions) {
@@ -31,11 +31,18 @@ function MeusAnuncios() {
     }
 
     useEffect(() => {
+        setFilter({
+            tipo: '',
+            especie: '',
+            raca: '',
+            sexo: '',
+            uf: '',
+        });
+    }, []);
+
+    useEffect(() => {
         getAnuncios(filterOptions);
     }, [filterOptions, refreshMainGet]);
-    useEffect(() => {
-        console.log(anuncios.data);
-    }, [anuncios]);
 
     return (
         <Main>

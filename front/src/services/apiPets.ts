@@ -94,7 +94,7 @@ export interface IUser {
 }
 
 export interface IFoto {
-    cod_foto_anuncio?: number;
+    cod_foto_anuncio: number;
     cod_anuncio: number;
     extensao: string;
     arquivo: string;

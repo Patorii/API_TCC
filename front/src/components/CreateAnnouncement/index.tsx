@@ -89,6 +89,7 @@ function CreateAnnouncement() {
             .string()
             .max(11, 'Deve conter no maxímo 11 digitos')
             .nullable(),
+        foto: yup.mixed().required('É necessário selecionar uma foto'),
     });
 
     const {
@@ -286,6 +287,7 @@ function CreateAnnouncement() {
                             register={register}
                             errors={errors.cep}
                             placeholder="Digite o CEP"
+                            maxLength={8}
                         />
                     </InputArea>
                 </InputLine>
@@ -346,6 +348,7 @@ function CreateAnnouncement() {
                             register={register}
                             errors={errors.tel}
                             placeholder="1134567891"
+                            maxLength={11}
                         />
                     </InputArea>
                     <InputArea>
@@ -355,6 +358,7 @@ function CreateAnnouncement() {
                             register={register}
                             errors={errors.tel2}
                             placeholder="11987564321"
+                            maxLength={11}
                         />
                     </InputArea>
                 </InputLine>

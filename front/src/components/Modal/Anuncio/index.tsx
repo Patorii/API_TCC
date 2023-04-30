@@ -57,7 +57,16 @@ function Anuncio({ codAnuncio }: IProps) {
                         <RigthSideTitle>
                             Sobre {anuncio.nome_animal}
                         </RigthSideTitle>
+
                         <Description>{anuncio.descricao}</Description>
+                        <TopicsArea>
+                            <Topic>Tipo de anuncio:</Topic>
+                            <TopicText>
+                                {anuncio.tipo === 'A'
+                                    ? ' Adoção'
+                                    : ' Animal perdido'}
+                            </TopicText>
+                        </TopicsArea>
                         <InformationLine>
                             <TopicsArea>
                                 <Topic>Sexo:</Topic>

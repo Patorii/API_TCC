@@ -35,7 +35,7 @@ export const Card = styled.div`
     align-items: center;
     gap: 8px;
     width: 250px;
-    height: 340px;
+    height: 370px;
     padding: 16px 16px 4px 16px;
     background: var(--dark-blue);
     border-radius: 10px;

@@ -30,7 +30,9 @@ function EditGrid({ anuncios }: IProps) {
             toast.success('Anuncio apagado com sucesso!');
             setRefresh();
         } catch (err) {
-            console.log(err);
+            toast.error(
+                'Não foi possivel apagar o anúncio, tente novamente mais tarde!'
+            );
         }
     }
 
@@ -56,10 +58,20 @@ function EditGrid({ anuncios }: IProps) {
                                     <Button
                                         buttonType="secondary"
                                         buttonSize="small"
-                                        caption="Editar"
+                                        caption="Editar dados"
                                         onClick={() =>
                                             navigate(
                                                 `/editanuncio/${anuncio.cod_animal}`
+                                            )
+                                        }
+                                    />
+                                    <Button
+                                        buttonType="secondary"
+                                        buttonSize="small"
+                                        caption="Editar fotos"
+                                        onClick={() =>
+                                            navigate(
+                                                `/editfotoanuncio/${anuncio.cod_animal}`
                                             )
                                         }
                                     />

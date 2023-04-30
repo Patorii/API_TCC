@@ -8,6 +8,8 @@ import { PageAnuncio } from './pages/anuncio';
 import { CriarAnuncio } from './pages/criarAnuncio';
 import { MeusAnuncios } from './pages/meusAnuncios';
 import { AlterarAnuncio } from './pages/alterAnuncio';
+import { FotosAnuncio } from './components/FotosAnuncio';
+import { AlterarFotosAnuncio } from './pages/alterFotoAnuncio';
 
 interface IProtectedRoutes {
     user: boolean;
@@ -51,6 +53,14 @@ function AppRoutes() {
                         element={
                             <ProtectedRoute user={signed}>
                                 <AlterarAnuncio />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="editfotoanuncio/:id"
+                        element={
+                            <ProtectedRoute user={signed}>
+                                <AlterarFotosAnuncio />
                             </ProtectedRoute>
                         }
                     />

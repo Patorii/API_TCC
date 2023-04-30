@@ -71,7 +71,7 @@ export const Description = styled.p`
     font-size: 16px;
     font-weight: 400;
     color: var(--dark-blue);
-    max-height: 200px;
+    max-height: 170px;
     overflow-y: auto;
     text-align: justify;
     padding-right: 4px;
