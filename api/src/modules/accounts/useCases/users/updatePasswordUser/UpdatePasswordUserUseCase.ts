@@ -88,7 +88,6 @@ class UpdatePasswordUserUseCase {
             });
             throw new AppError(msg, 406);
         }
-        console.log(nova_senha);
         const passwordHash = await hash(nova_senha, 8);
 
         const user = await this.usersRepository.update({
